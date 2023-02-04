@@ -1,0 +1,14 @@
+// write style for Tags component using base on blocks names and using purple colors
+// example .tagsContainer .tagsContainer .tag
+.tagsContainer {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+
+	.tag {
+		padding: 0.5rem;
+		border-radius: 5px;
+		background-color: #f3e5f5;
+		color: #7b1fa2;
+	}
+}
