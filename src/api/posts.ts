@@ -7,10 +7,13 @@ import {
 	startAt,
 	orderBy,
 	addDoc,
-	limit
+	limit,
+	updateDoc,
+	doc
 } from 'firebase/firestore';
 
 import { postsCollection } from '@/firebaseClient/collections';
+import { postDocument } from '@/firebaseClient/docs';
 
 import { IPost } from '@/types/common';
 import { GetPostApi } from '@/types/api';
@@ -25,10 +28,8 @@ export const getAllPosts = ({
 	console.log(end, start, order)
 	const allPosts = query(
 			postsCollection,
-			orderBy(order),
-			startAt(start),
-			endAt(end),
-			limit(limitSize)
+			orderBy(order, 'desc'),
+			limit(limitSize),
 		);
 
 	return getDocs(allPosts);
@@ -48,9 +49,13 @@ export const deletePost = (props: IPost) => {
 	)
 }
 
-export const updatePost = (props: IPost) => {
-	return addDoc(
-		postsCollection,
+export const updatePost = (props: Partial<IPost>) => {
+	if(!props?.postId) return
+	console.log(props)
+	const docRef = postDocument(props?.postId);
+
+	return updateDoc(
+		docRef,
 		{...props}
 	)
 }

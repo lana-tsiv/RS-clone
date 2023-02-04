@@ -1,9 +1,10 @@
-import { createPost, getAllPosts } from '@/api/posts';
-import { CREATE_POST, POSTS } from '@/constants/queryKeys';
 import { useMutation, useQuery } from '@/hooks/reactQuery';
-import { IPost } from '@/types/common';
+
+import { CREATE_POST, POSTS, VOTE_POST } from '@/constants/queryKeys';
+import { createPost, getAllPosts, updatePost } from '@/api/posts';
 
 export const usePosts = (params?: any) => {
+
     const {
 		end,
 		start,
@@ -32,6 +33,16 @@ export const usePosts = (params?: any) => {
 		},
 	});
 
+	// const {
+	// 	mutate: handleVotePost,
+	// } = useMutation({
+	// 	mutationKey: [VOTE_POST],
+	// 	mutationFn: updatePost,
+	// 	onSuccess: () => {
+	// 		console.log('POST VOTED')
+	// 	},
+	// });
+
 	return { 
 		postsData,
 		handleCreatePost,
@@ -39,3 +50,17 @@ export const usePosts = (params?: any) => {
 		isLoadingCreatePost,
 	};
 };
+
+export const useMangePosts = () => {
+	const {
+		mutate: handleVotePost,
+	} = useMutation({
+		mutationKey: [VOTE_POST],
+		mutationFn: updatePost,
+		onSuccess: () => {
+			console.log('POST VOTED')
+		},
+	});
+
+	return { handleVotePost }
+}

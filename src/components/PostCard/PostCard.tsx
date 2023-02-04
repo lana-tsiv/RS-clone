@@ -11,6 +11,7 @@ import style from "./PostCard.module.scss";
 
 interface IPostCard {
   fields: IPost;
+  postId: string,
   commentsCount?: number;
 }
 
@@ -21,25 +22,32 @@ const defaultPostPanelOptions = [
   }
 ]
 
-const PostCard = ({ fields, commentsCount }: IPostCard) => {
-
+const PostCard = ({
+  fields,
+  commentsCount,
+  postId,
+}: IPostCard) => {
+  console.log(fields.votesUp)
   return (
     <div className={style.postCardContainer}>
-      <VoteControl votesUp={fields.votesUp} />
-        <div className={style.content}>
-          <div className={style.postCardHeader}>
-            <div className={style.title}>some</div>
-          </div>
-            <div className={style.text}>
-              <p>{fields.text}</p>
-            </div>
-            <div className={style.image}>
-              <img
-                src={fields.images[0]}
-                alt='post image'
-              />
-            </div>
-          <Tags tags={fields.tags} />
+      <VoteControl 
+        votesUp={fields.votesUp} 
+        postId={postId}
+      />
+      <div className={style.content}>
+        <div className={style.postCardHeader}>
+          <div className={style.title}>some</div>
+        </div>
+        <div className={style.text}>
+          <p>{fields.text}</p>
+        </div>
+        <div className={style.image}>
+          <img
+            src={fields.images[0]}
+            alt='post image'
+          />
+        </div>
+        <Tags tags={fields.tags} />
         <PostActionPanel
             actionList={defaultPostPanelOptions}
         />

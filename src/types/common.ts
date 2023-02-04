@@ -1,4 +1,5 @@
 export interface IPost {
+	postId?: string;
 	title?: string;
 	votesUp: number;
 	images: string[];

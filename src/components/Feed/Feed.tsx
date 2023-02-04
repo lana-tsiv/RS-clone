@@ -22,10 +22,11 @@ const Feed = (props: IFeed) => {
     <div className={style.feedContainer}>
       {list.map((post: any, index: number) => {
         const postFields = post.data();
-
+        console.log(post.id)
         return <PostCard
           key={`post-${post.id}-${index}`}
           fields={postFields}
+          postId={post.id}
         />
       }
     )}
