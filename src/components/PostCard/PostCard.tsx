@@ -27,7 +27,7 @@ const PostCard = ({
   commentsCount,
   postId,
 }: IPostCard) => {
-  console.log(fields.votesUp)
+  
   return (
     <div className={style.postCardContainer}>
       <VoteControl 

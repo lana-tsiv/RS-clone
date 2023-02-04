@@ -33,16 +33,6 @@ export const usePosts = (params?: any) => {
 		},
 	});
 
-	// const {
-	// 	mutate: handleVotePost,
-	// } = useMutation({
-	// 	mutationKey: [VOTE_POST],
-	// 	mutationFn: updatePost,
-	// 	onSuccess: () => {
-	// 		console.log('POST VOTED')
-	// 	},
-	// });
-
 	return { 
 		postsData,
 		handleCreatePost,

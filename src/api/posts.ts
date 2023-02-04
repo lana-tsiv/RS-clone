@@ -25,7 +25,6 @@ export const getAllPosts = ({
 	order=OrderOptions.votesUp,
 	limitSize=10
 } : GetPostApi) => {
-	console.log(end, start, order)
 	const allPosts = query(
 			postsCollection,
 			orderBy(order, 'desc'),
@@ -51,7 +50,7 @@ export const deletePost = (props: IPost) => {
 
 export const updatePost = (props: Partial<IPost>) => {
 	if(!props?.postId) return
-	console.log(props)
+	
 	const docRef = postDocument(props?.postId);
 
 	return updateDoc(

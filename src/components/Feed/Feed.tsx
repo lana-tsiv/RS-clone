@@ -16,13 +16,14 @@ const Feed = (props: IFeed) => {
     order: OrderOptions.votesUp,
     limitSize: 10,
   });
-  console.log(postsData)
+
   const list = postsData?.docs ? postsData?.docs : null;
+  
   return list ? (
     <div className={style.feedContainer}>
       {list.map((post: any, index: number) => {
         const postFields = post.data();
-        console.log(post.id)
+
         return <PostCard
           key={`post-${post.id}-${index}`}
           fields={postFields}
