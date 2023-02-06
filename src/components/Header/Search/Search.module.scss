@@ -1,0 +1,29 @@
+.search-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 35%;
+}
+
+.search {
+    margin: 0;
+    padding: 6px 16px 6px 40px;
+    border-radius: 4px;
+    outline: 1px solid transparent;
+    border: 1px solid #696969;
+    color: #696969;
+}
+
+.search__icon {
+    width: 16px;
+    height: 16px;
+    padding: 6px;
+    object-fit: cover;
+    position: absolute;
+    filter: opacity(40%);
+}
+
+.search:focus {
+    outline: 1px solid #696969;
+    border: 1px solid transparent;
+}
