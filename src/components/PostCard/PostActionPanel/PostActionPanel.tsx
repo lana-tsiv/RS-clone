@@ -1,5 +1,4 @@
 import React from "react";
-
 import style from "./PostActionPanel.module.scss";
 
 interface IPostActionPanel {
@@ -7,10 +6,10 @@ interface IPostActionPanel {
   id?: string;
 }
 
-const Action = ({ text, icon }: { text: string, icon: any }) => {
+const Action = ({ text, icon: Icon }: { text: string, icon: any }) => {
   return (
     <div className={style.actionPanelContainer}>
-      <div className={style.commentsIcon}>{icon}</div>
+      <div className={style.commentsIcon}><Icon /></div>
       <div className={style.commentsCount}>{text}</div>
     </div>
   );

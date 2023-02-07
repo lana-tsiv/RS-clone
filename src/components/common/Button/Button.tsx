@@ -22,7 +22,7 @@ const mockPost = {
 const Button = ({text, clickHandler}: IButton) => {
   return (
     <div className={style.buttonContainer}>
-      <button onClick={clickHandler}>{text}</button>
+      <button className={style.button} onClick={clickHandler}>{text}</button>
     </div>
   );
 };

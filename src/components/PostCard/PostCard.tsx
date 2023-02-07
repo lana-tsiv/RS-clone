@@ -8,6 +8,7 @@ import VoteControl from "./VoteControl";
 import { IPost } from "@/types/common";
 
 import style from "./PostCard.module.scss";
+import CommentIcon from "@/components/common/CommentIcon";
 
 interface IPostCard {
   fields: IPost;
@@ -18,7 +19,7 @@ interface IPostCard {
 const defaultPostPanelOptions = [
   {
     text: 'comments',
-    icon: '!'
+    icon: CommentIcon
   }
 ]
 
@@ -27,11 +28,11 @@ const PostCard = ({
   commentsCount,
   postId,
 }: IPostCard) => {
-  
+
   return (
     <div className={style.postCardContainer}>
-      <VoteControl 
-        votesUp={fields.votesUp} 
+      <VoteControl
+        votesUp={fields.votesUp}
         postId={postId}
       />
       <div className={style.content}>
@@ -43,6 +44,7 @@ const PostCard = ({
         </div>
         <div className={style.image}>
           <img
+            className={style.size}
             src={fields.images[0]}
             alt='post image'
           />
