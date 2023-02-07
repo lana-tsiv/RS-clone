@@ -7,7 +7,6 @@ import Feed from '@/components/Feed';
 export default function Home() {
   return (
     <div>
-      <div>Hello, project</div>
       <Feed/>
       <Button 
         text="Click me"
