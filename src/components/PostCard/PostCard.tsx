@@ -27,11 +27,11 @@ const PostCard = ({
   commentsCount,
   postId,
 }: IPostCard) => {
-  
+
   return (
     <div className={style.postCardContainer}>
-      <VoteControl 
-        votesUp={fields.votesUp} 
+      <VoteControl
+        votesUp={fields.votesUp}
         postId={postId}
       />
       <div className={style.content}>
@@ -43,6 +43,7 @@ const PostCard = ({
         </div>
         <div className={style.image}>
           <img
+            className={style.size}
             src={fields.images[0]}
             alt='post image'
           />
