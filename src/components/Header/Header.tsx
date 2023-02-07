@@ -4,15 +4,18 @@ import RedditTextLogo from "../common/RedditTextLogo";
 import style from "./Header.module.scss";
 import Search from "./Search";
 
-
 const Header: React.FC = () => {
   return (
     <header className={style.header}>
-      <RedditLogo />
-      <RedditTextLogo />
+      <div className={style.header_logo__wrapper}>
+        <RedditLogo />
+        <RedditTextLogo />
+      </div>
       <Search />
-      <button className={style.reddit_button}>Get App</button>
-      <button className={style.reddit_button}>Log In</button>
+      <div className={style.header_buttons__wrapper}>
+        <button className={style.header_buttons__button}>Get App</button>
+        <button className={style.header_buttons__button}>Log In</button>
+      </div>
     </header>
   );
 };

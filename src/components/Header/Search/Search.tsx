@@ -5,7 +5,7 @@ import styles from "./Search.module.scss";
 
 const Search = () => {
   return (
-    <div className="search-wrap">
+    <div className={styles.search_wrap}>
       <Image className={styles.search__icon} src={SearchImage} alt="search" />
       <input className={styles.search} type="text" placeholder="Search" />
     </div>
