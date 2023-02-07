@@ -8,6 +8,7 @@ import VoteControl from "./VoteControl";
 import { IPost } from "@/types/common";
 
 import style from "./PostCard.module.scss";
+import CommentIcon from "@/components/common/CommentIcon";
 
 interface IPostCard {
   fields: IPost;
@@ -18,7 +19,7 @@ interface IPostCard {
 const defaultPostPanelOptions = [
   {
     text: 'comments',
-    icon: '!'
+    icon: CommentIcon
   }
 ]
 
