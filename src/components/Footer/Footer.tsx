@@ -9,20 +9,20 @@ const Footer = () => {
         <div>
             <footer className={styles.footer}>
                 <div className={styles.socialMedia}>
-                    <a href='https://rs.school/js' target='_blank'>
+                    <a href='https://rs.school/js' target='_blank' rel="noreferrer">
                         <RSLogo/>
                     </a>
                 </div>
                 <div className={styles.contacts}>
-                    <a className={styles.itemLink} href='https://github.com/vincapto' target='_blank'>
+                    <a className={styles.itemLink} href='https://github.com/vincapto' target='_blank' rel="noreferrer">
                         <GitLogo/>
                         <p className={styles.name}>Raman Lazarenka</p>
                     </a>
-                    <a className={styles.itemLink} href='https://github.com/kavume' target='_blank'>
+                    <a className={styles.itemLink} href='https://github.com/kavume' target='_blank' rel="noreferrer">
                         <GitLogo/>
                         <p className={styles.name}>Ekaterina Gorbacheva</p>
                     </a>
-                    <a className={styles.itemLink} href='https://github.com/lana-tsiv' target='_blank'>
+                    <a className={styles.itemLink} href='https://github.com/lana-tsiv' target='_blank' rel="noreferrer">
                         <GitLogo/>
                         <p className={styles.name}>Lana Tsiushkevich</p>
                     </a>

@@ -1,0 +1,37 @@
+.search_wrap {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  align-items: center;
+  width: 35%;
+}
+
+.search {
+  margin: 0;
+  width: 100%;
+  border-radius: 4px;
+  padding: 6px 16px 6px 40px;
+  outline: 1px solid transparent;
+  border: 1px solid #696969;
+  color: #696969;
+  align-items: center;
+  background-color: #f6f7f8;
+}
+
+.search {
+  &__icon {
+    width: 16px;
+    height: 16px;
+    left: 2%;
+    position: absolute;
+    object-fit: cover;
+    filter: opacity(40%);
+  }
+}
+
+.search {
+  &:focus {
+    outline: 1px solid #696969;
+    border: 1px solid transparent;
+  }
+}
