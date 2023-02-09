@@ -51,6 +51,7 @@ const PostCard = ({
         </div>
         <Tags tags={fields.tags} />
         <PostActionPanel
+            postId={postId}
             actionList={defaultPostPanelOptions}
         />
       </div>
