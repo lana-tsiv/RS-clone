@@ -6,6 +6,7 @@ import Search from "./Search";
 import ReactModal from "react-modal";
 import ModalLogIn from "./ModalLogIn";
 import CloseLogo from "../common/CloseLogo";
+import translate from "@/i18n/translate";
 
 const Header: React.FC = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -26,9 +27,11 @@ const Header: React.FC = () => {
       </div>
       <Search />
       <div className={style.header_buttons__wrapper}>
-        <button className={style.header_buttons__button}>Get App</button>
+        <button className={style.header_buttons__button}>
+            {translate('header.button.getApp')}
+        </button>
         <button className={style.header_buttons__button} onClick={openModal}>
-          Log In
+            {translate('header.button.logIn')}
         </button>
       </div>
       <ReactModal

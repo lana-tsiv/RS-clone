@@ -1,20 +1,31 @@
 import GoogleButton from "../GoogleButton/GoogleButton";
 import styles from "./ModalLogIn.module.scss";
+import translate from "@/i18n/translate";
+import { useIntl } from "react-intl";
 
 const ModalLogIn = () => {
+  const intl = useIntl();
+  const placeholderUsername = intl.formatMessage({
+    id: "Modal.placeholder.username",
+    defaultMessage: "Username",
+  });
+  const placeholderPassword = intl.formatMessage({
+    id: "Modal.placeholder.password",
+    defaultMessage: "Password",
+  });
+
   return (
     <div className={styles.modal_content}>
-      <h1 className={styles.modal_content__h1}>Log In</h1>
+      <h1 className={styles.modal_content__h1}>{translate("ModalLogIn")}</h1>
       <p className={styles.modal_content__p}>
         {" "}
-        By continuing, you agree are setting up a Reddit account and agree to
-        our{" "}
+        {translate("ModalLogIn.policy")}{" "}
         <a
           className={styles.modal_content__p__a}
           href="https://www.redditinc.com/policies/user-agreement"
         >
           {" "}
-          User Agreement{" "}
+          {translate("agreement")}{" "}
         </a>
         and{" "}
         <a
@@ -22,7 +33,7 @@ const ModalLogIn = () => {
           href="https://www.reddit.com/policies/privacy-policy"
         >
           {" "}
-          Privacy Policy.
+          {translate("policy")}.
         </a>
       </p>
       <GoogleButton />
@@ -43,53 +54,55 @@ const ModalLogIn = () => {
             ></path>
           </g>
         </svg>
-        <span>Continue with Apple</span>
+        <span>{translate("withApple")}</span>
       </button>
       <div className={styles.modal_content__span}>
         <span className={styles.modal_content__span_span1}></span>
-        <span className={styles.modal_content__span_span2}>OR</span>
+        <span className={styles.modal_content__span_span2}>
+          {translate("or")}
+        </span>
         <span className={styles.modal_content__span_span3}></span>
       </div>
       <input
         type="text"
         className={styles.modal_content_input__username}
         id="username"
-        placeholder="Username"
+        placeholder={placeholderUsername}
       />
       <input
         type="text"
         className={styles.modal_content_input__password}
         id="Password"
-        placeholder="Password"
+        placeholder={placeholderPassword}
       />
       <div className={styles.modal_content__div}>
-        Forget your{" "}
+        {translate("modalLogIn.forget")}{" "}
         <a
           className={styles.modal_content__div__a}
           href="/username?experiment_d2x_2020ify_buttons=enabled&amp;experiment_d2x_google_sso_gis_parity=enabled&amp;experiment_d2x_onboarding=enabled&amp;experiment_d2x_am_modal_design_update=enabled"
         >
-          username
+          {translate("username")}
         </a>{" "}
-        or{" "}
+        {translate("or")}{" "}
         <a
           className={styles.modal_content__div__a}
           href="/password?experiment_d2x_2020ify_buttons=enabled&amp;experiment_d2x_google_sso_gis_parity=enabled&amp;experiment_d2x_onboarding=enabled&amp;experiment_d2x_am_modal_design_update=enabled"
         >
-          password
+          {translate("password")}
         </a>{" "}
         ?
       </div>
       <button className={styles.modal_content__button__login} type="submit">
-        Log In
+        {translate("ModalLogIn")}
       </button>
       <div className={styles.modal_content__div}>
-        New to Reddit?
+        {translate("ModalLogIn.newRaddid")}?
         <a
           className={styles.modal_content__div__a}
           href="/account/register/?experiment_d2x_2020ify_buttons=enabled&amp;experiment_d2x_google_sso_gis_parity=enabled&amp;experiment_d2x_onboarding=enabled&amp;experiment_d2x_am_modal_design_update=enabled"
         >
           {" "}
-          Sign Up{" "}
+          {translate("ModalSignUp")}{" "}
         </a>
       </div>
     </div>

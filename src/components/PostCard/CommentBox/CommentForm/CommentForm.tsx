@@ -1,5 +1,6 @@
 import React, {FormEvent, useState} from 'react';
 import styles from './CommentForm.module.scss'
+import {useIntl} from "react-intl";
 
 const CommentForm = ({submitLabel, handleSubmit}: { submitLabel: string, handleSubmit: (arg: string) => void}) => {
 
@@ -12,6 +13,8 @@ const CommentForm = ({submitLabel, handleSubmit}: { submitLabel: string, handleS
     }
 
     const isDisabled = commentText.length < 1;
+    const intl = useIntl();
+    const placeholder = intl.formatMessage({id: 'CommentForm.comment.placeholder', defaultMessage: 'Add your comment here'})
 
     return (
         <form className={styles.form} onSubmit={onSubmit}>
@@ -19,7 +22,7 @@ const CommentForm = ({submitLabel, handleSubmit}: { submitLabel: string, handleS
                 className={styles.textarea}
                 value={commentText}
                 onChange={(event) => setCommentText(event.target.value)}
-                placeholder='Add your comment here'
+                placeholder={placeholder}
             />
             <button
                 className={styles.button}
