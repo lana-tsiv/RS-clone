@@ -3,12 +3,12 @@ import style from "./PostActionPanel.module.scss";
 import CommentBox from "@/components/PostCard/CommentBox";
 
 interface IPostActionPanel {
-  actionList: { text: string; icon: any }[];
+  actionList: { text: React.ReactNode; icon: any }[];
   id?: string;
   postId: string
 }
 
-const Action = ({ text, icon: Icon, postId}: { text: string, icon: any, postId: string}) => {
+const Action = ({ text, icon: Icon, postId}: { text: React.ReactNode, icon: any, postId: string}) => {
 
     const [uploadComment, setUploadComment] = useState(false);
     const clickHandle = () => {

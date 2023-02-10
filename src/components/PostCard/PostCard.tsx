@@ -9,6 +9,8 @@ import { IPost } from "@/types/common";
 
 import style from "./PostCard.module.scss";
 import CommentIcon from "@/components/common/CommentIcon";
+import translate from "@/i18n/translate";
+import {FormattedMessage} from "react-intl";
 
 interface IPostCard {
   fields: IPost;
@@ -18,7 +20,7 @@ interface IPostCard {
 
 const defaultPostPanelOptions = [
   {
-    text: 'comments',
+    text: <FormattedMessage id="defaultPostPanelOptions.comments" defaultMessage="comments" />,
     icon: CommentIcon
   }
 ]
