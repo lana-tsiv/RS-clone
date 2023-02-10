@@ -1,5 +1,6 @@
 import { GoogleAuthProvider, signInWithPopup, getAuth } from "firebase/auth";
 import React, { useState } from "react";
+import translate from "@/i18n/translate";
 
 import styles from "./GoogleButton.module.scss";
 
@@ -54,7 +55,7 @@ const GoogleButton: React.FC = () => {
           />
           <path fill="none" d="M0 0h18v18H0z" />
         </svg>
-        Continue with Google
+        {translate("withGoogle")}
       </button>{" "}
       {/* {error && <p>{error}</p>} */}
     </>
