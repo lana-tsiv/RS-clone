@@ -1,3 +1,3 @@
-import { AppRootStateType } from '/@store/reducer';
+import { AppRootStateType } from '@/store/reducer';
 
-export const common = (state: AppRootStateType) => state.common;
+export const main = (state: AppRootStateType) => state.main;

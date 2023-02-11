@@ -21,7 +21,10 @@ export const usePosts = (params?: any) => {
 		isLoading: isLoadingPosts,
 		isFetching: isFetchingPosts,
 	} = useQuery({
-		queryKey: [POSTS],
+		queryKey: [
+			POSTS,
+			limitSize
+		],
 		queryFn: () => getAllPosts({ end, start, order,limitSize }),
 		refetchOnWindowFocus: false,
 		onSuccess: () => {

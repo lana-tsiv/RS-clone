@@ -10,7 +10,7 @@ interface InitialState {
 
 const initialState: InitialState = {
 	page: 1,
-	pageSize: 10,
+	pageSize: 5,
 	sortDirection: false,
 	sortFieldName: null,
 	searchValue: '',

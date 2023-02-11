@@ -16,6 +16,7 @@ interface IPostCard {
   fields: IPost;
   postId: string,
   commentsCount?: number;
+  refView?: any;
 }
 
 const defaultPostPanelOptions = [
@@ -29,10 +30,11 @@ const PostCard = ({
   fields,
   commentsCount,
   postId,
+  refView
 }: IPostCard) => {
 
   return (
-    <div className={style.postCardContainer}>
+    <div className={style.postCardContainer} ref={refView? refView : null}>
       <VoteControl
         votesUp={fields.votesUp}
         postId={postId}
