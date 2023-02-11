@@ -36,7 +36,7 @@ const useQuery = ({ queryKey, queryFn, select, ...rest }: UseReactQueryParams): 
 	return { data, error, isFetching, status, isLoading };
 };
 
-const useMutation = ({
+const useMutation = <TVariables = void, TError = any, TData = any, TContext = any >({
 	mutationKey,
 	mutationFn,
 	onSuccess,
@@ -53,7 +53,7 @@ const useMutation = ({
 		mutate,
 		mutateAsync,
 		status,
-	} = useReactMutation<any>(mutationFn, {
+	} = useReactMutation<TData, TError, TVariables, TContext>(mutationFn, {
 		mutationKey,
 		onSuccess,
 		...rest,

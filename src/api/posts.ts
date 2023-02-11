@@ -23,11 +23,11 @@ export const getAllPosts = ({
 	end=10,
 	start=0,
 	order=OrderOptions.votesUp,
-	limitSize=10
+	limitSize
 } : GetPostApi) => {
 	const allPosts = query(
 			postsCollection,
-			orderBy(order, 'desc'),
+			orderBy('timestamp', 'desc'),
 			limit(limitSize),
 		);
 
