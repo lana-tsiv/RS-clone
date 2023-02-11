@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ErrorLabel from '../ErrorLabel/ErrorLabel';
+import ErrorLabel from '@/components/common/ErrorLabel';
 
 import style from './TextArea.module.scss'
 

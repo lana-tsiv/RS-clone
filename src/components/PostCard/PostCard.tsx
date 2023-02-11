@@ -1,16 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
-import React, {useState, useEffect} from "react";
+import React from "react";
 import PostActionPanel from './PostActionPanel';
+import { FormattedMessage } from "react-intl";
 
 import Tags from "./Tags";
 import VoteControl from "./VoteControl";
+import CommentIcon from "@/components/common/CommentIcon";
 
 import { IPost } from "@/types/common";
 
 import style from "./PostCard.module.scss";
-import CommentIcon from "@/components/common/CommentIcon";
-import translate from "@/i18n/translate";
-import {FormattedMessage} from "react-intl";
 
 interface IPostCard {
   fields: IPost;

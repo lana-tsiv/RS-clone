@@ -7,11 +7,10 @@ import PostForm from '@/components/Form/PostForm/PostForm';
 import { usePosts } from "@/hooks/usePosts";
 import { OrderOptions } from "@/constants/enums";
 import { useAppDispatch, useAppSelector } from '@/store/store';
-
-import style from "./Feed.module.scss";
 import { setPageSize } from '@/slices/main';
 import { main } from '@/store/selectors'
-import Button from '../common/Button';
+
+import style from "./Feed.module.scss";
 
 interface IFeed {
   field?: [];

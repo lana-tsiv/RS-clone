@@ -1,5 +1,5 @@
 import React from 'react';
-import ErrorLabel from '../ErrorLabel';
+import ErrorLabel from '@/components/common/ErrorLabel';
 
 import style from './Input.module.scss'
 

@@ -1,19 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useForm } from 'react-hook-form';
-import * as yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
 import TextArea from "@/components/common/TextArea";
 import ImageInput from '@/components/common/ImageInput';
+import Spinner from '@/components/common/Spinner/Spinner';
 
 import { usePosts } from "@/hooks/usePosts";
 import { uploadImage } from '@/utils/image';
+import { validationPost } from './schema';
 
 import style from "./PostForm.module.scss";
-import { validationPost } from './schema';
-import Spinner from '../../common/Spinner/Spinner';
 
 interface IPostForm {
   field?: [];
