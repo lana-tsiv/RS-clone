@@ -28,11 +28,11 @@ const PostForm = (props: IPostForm) => {
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value);
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => setText(e.target.value);
-  const handleCreatePostClick = (data: any) => {
-    console.log(data)
-    image? uploadImage(image, handleSendPost): handleSendPost(null);
-  }
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => setImage(event.target.files);
+  const handleCreatePostClick = ()=> {
+    image? uploadImage(image, handleSendPost): handleSendPost(null);
+    reset();
+  }
 
   const handleSendPost = (url: string | null) => {
     handleCreatePost({
@@ -46,14 +46,11 @@ const PostForm = (props: IPostForm) => {
     });
   }
 
-  const onSubmitHandler = (data: any) => {
-    console.log({ data,errors });
-  };
-
   const {
 		formState: { errors },
 		handleSubmit,
     register,
+    reset,
 	} = useForm<any>({
 		mode: 'all',
     resolver: yupResolver( validationPost),
@@ -63,10 +60,6 @@ const PostForm = (props: IPostForm) => {
       title: '',
 		},
 	});
-
-  useEffect(() => {
-    console.log("🚀 ~ file: PostForm.tsx:47 ~ handleCheck ~ a", errors)
-  }, [errors])
 
   return (
     <div className={style.postFormContainer}>
