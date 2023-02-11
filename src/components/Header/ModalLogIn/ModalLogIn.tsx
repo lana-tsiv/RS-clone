@@ -1,61 +1,42 @@
+import GoogleButton from "../GoogleButton/GoogleButton";
 import styles from "./ModalLogIn.module.scss";
 import translate from "@/i18n/translate";
-import {useIntl} from "react-intl";
+import { useIntl } from "react-intl";
 
 const ModalLogIn = () => {
-    const intl = useIntl();
-    const placeholderUsername = intl.formatMessage({ id: 'Modal.placeholder.username', defaultMessage: 'Username' });
-    const placeholderPassword = intl.formatMessage({ id: 'Modal.placeholder.password', defaultMessage: 'Password' });
+  const intl = useIntl();
+  const placeholderUsername = intl.formatMessage({
+    id: "Modal.placeholder.username",
+    defaultMessage: "Username",
+  });
+  const placeholderPassword = intl.formatMessage({
+    id: "Modal.placeholder.password",
+    defaultMessage: "Password",
+  });
 
   return (
     <div className={styles.modal_content}>
-      <h1 className={styles.modal_content__h1}>{translate('ModalLogIn')}</h1>
-      <p className={styles.modal_content__p}>{" "}
-          {translate('ModalLogIn.policy')}
+      <h1 className={styles.modal_content__h1}>{translate("ModalLogIn")}</h1>
+      <p className={styles.modal_content__p}>
         {" "}
+        {translate("ModalLogIn.policy")}{" "}
         <a
           className={styles.modal_content__p__a}
           href="https://www.redditinc.com/policies/user-agreement"
-        >{" "}
-            {translate('agreement')}
+        >
           {" "}
+          {translate("agreement")}{" "}
         </a>
-        and {" "}
+        and{" "}
         <a
           className={styles.modal_content__p__a}
           href="https://www.reddit.com/policies/privacy-policy"
-        >{" "}
-            {translate('policy')}.
+        >
+          {" "}
+          {translate("policy")}.
         </a>
       </p>
-      <button className={styles.modal_content__button_google}>
-        <svg
-          className={styles.modal_content__button_google_svg}
-          xmlns="http://www.w3.org/2000/svg"
-          width="18"
-          height="18"
-          viewBox="0 0 18 18"
-        >
-          <path
-            fill="#EA4335"
-            d="M9 3.48c1.69 0 2.83.73 3.48 1.34l2.54-2.48C13.46.89 11.43 0 9 0 5.48 0 2.44 2.02.96 4.96l2.91 2.26C4.6 5.05 6.62 3.48 9 3.48z"
-          />
-          <path
-            fill="#4285F4"
-            d="M17.64 9.2c0-.74-.06-1.28-.19-1.84H9v3.34h4.96c-.1.83-.64 2.08-1.84 2.92l2.84 2.2c1.7-1.57 2.68-3.88 2.68-6.62z"
-          />
-          <path
-            fill="#FBBC05"
-            d="M3.88 10.78A5.54 5.54 0 0 1 3.58 9c0-.62.11-1.22.29-1.78L.96 4.96A9.008 9.008 0 0 0 0 9c0 1.45.35 2.82.96 4.04l2.92-2.26z"
-          />
-          <path
-            fill="#34A853"
-            d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.84-2.2c-.76.53-1.78.9-3.12.9-2.38 0-4.4-1.57-5.12-3.74L.97 13.04C2.45 15.98 5.48 18 9 18z"
-          />
-          <path fill="none" d="M0 0h18v18H0z" />
-        </svg>
-        <span>{translate('withGoogle')}</span>
-      </button>
+      <GoogleButton />
       <button className={styles.modal_content__button_apple}>
         <svg
           className={styles.modal_content__button_apple_svg}
@@ -73,11 +54,13 @@ const ModalLogIn = () => {
             ></path>
           </g>
         </svg>
-        <span>{translate('withApple')}</span>
+        <span>{translate("withApple")}</span>
       </button>
       <div className={styles.modal_content__span}>
         <span className={styles.modal_content__span_span1}></span>
-        <span className={styles.modal_content__span_span2}>{translate('or')}</span>
+        <span className={styles.modal_content__span_span2}>
+          {translate("or")}
+        </span>
         <span className={styles.modal_content__span_span3}></span>
       </div>
       <input
@@ -93,33 +76,33 @@ const ModalLogIn = () => {
         placeholder={placeholderPassword}
       />
       <div className={styles.modal_content__div}>
-          {translate('modalLogIn.forget')}
-        {" "}
+        {translate("modalLogIn.forget")}{" "}
         <a
           className={styles.modal_content__div__a}
           href="/username?experiment_d2x_2020ify_buttons=enabled&amp;experiment_d2x_google_sso_gis_parity=enabled&amp;experiment_d2x_onboarding=enabled&amp;experiment_d2x_am_modal_design_update=enabled"
         >
-            {translate('username')}
+          {translate("username")}
         </a>{" "}
-          {translate('or')}{" "}
+        {translate("or")}{" "}
         <a
           className={styles.modal_content__div__a}
           href="/password?experiment_d2x_2020ify_buttons=enabled&amp;experiment_d2x_google_sso_gis_parity=enabled&amp;experiment_d2x_onboarding=enabled&amp;experiment_d2x_am_modal_design_update=enabled"
         >
-            {translate('password')}
+          {translate("password")}
         </a>{" "}
         ?
       </div>
       <button className={styles.modal_content__button__login} type="submit">
-          {translate('ModalLogIn')}
+        {translate("ModalLogIn")}
       </button>
       <div className={styles.modal_content__div}>
-          {translate('ModalLogIn.newRaddid')}?
+        {translate("ModalLogIn.newRaddid")}?
         <a
           className={styles.modal_content__div__a}
           href="/account/register/?experiment_d2x_2020ify_buttons=enabled&amp;experiment_d2x_google_sso_gis_parity=enabled&amp;experiment_d2x_onboarding=enabled&amp;experiment_d2x_am_modal_design_update=enabled"
-        >{" "}
-            {translate('ModalSignUp')}{" "}
+        >
+          {" "}
+          {translate("ModalSignUp")}{" "}
         </a>
       </div>
     </div>
