@@ -1,10 +1,13 @@
 import { useMutation, useQuery } from '@/hooks/reactQuery';
+import { useQueryClient } from '@tanstack/react-query';
 
 import { CREATE_POST, POSTS, VOTE_POST } from '@/constants/queryKeys';
 import { createPost, getAllPosts, updatePost } from '@/api/posts';
-import { IPost } from '../types/common';
+
+import { IPost } from '@/types/common';
 
 export const usePosts = (params?: any) => {
+	const queryClient = useQueryClient();
 
     const {
 		end,
@@ -21,6 +24,9 @@ export const usePosts = (params?: any) => {
 		queryKey: [POSTS],
 		queryFn: () => getAllPosts({ end, start, order,limitSize }),
 		refetchOnWindowFocus: false,
+		onSuccess: () => {
+			console.log('POSTS FETCHED')
+		}
 	});
 
 	const {
@@ -30,7 +36,7 @@ export const usePosts = (params?: any) => {
 		mutationKey: [CREATE_POST],
 		mutationFn: createPost,
 		onSuccess: () => {
-			console.log('POST ADDED')
+			return [ queryClient.invalidateQueries([POSTS]) ];
 		},
 	});
 
