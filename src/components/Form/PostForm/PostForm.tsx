@@ -6,6 +6,10 @@ import TextArea from "@/components/common/TextArea";
 
 import style from "./PostForm.module.scss";
 import { usePosts } from "../../../hooks/usePosts";
+import { storage } from "@/firebaseClient/clientApp";
+import { uploadBytesResumable, ref, getDownloadURL } from "firebase/storage";
+import ImageInput from '@/components/common/ImageInput';
+import { uploadImage } from '@/utils/image';
 
 interface IPostForm {
   field?: [];
@@ -14,6 +18,7 @@ interface IPostForm {
 const PostForm = (props: IPostForm) => {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
+  const [image, setImage] = useState<null | FileList >(null)
 
   const { handleCreatePost } = usePosts();
 
@@ -26,6 +31,10 @@ const PostForm = (props: IPostForm) => {
   };
 
   const handleCreatePostClick = () => {
+    image? uploadImage(image, handleSendPost): null;
+  };
+
+  const handleSendPost = (url: string) => {
     handleCreatePost({
       userId: "7ty4kpyNv35QonTVsZMA",
       title,
@@ -33,8 +42,13 @@ const PostForm = (props: IPostForm) => {
       votesUp: 0,
       votesDown: 0,
       timestamp: Date.now(),
+      images: [url],
     });
-  };
+  }
+
+  function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
+    setImage(event.target.files);
+  }
 
   return (
     <div className={style.postFormContainer}>
@@ -47,6 +61,9 @@ const PostForm = (props: IPostForm) => {
         name='content'
         placeholder='Content'
         onInput={handleTextChange}
+      />
+      <ImageInput
+        onChange={handleImageChange}
       />
       <Button
         clickHandler={handleCreatePostClick}

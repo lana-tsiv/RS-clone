@@ -27,7 +27,7 @@ export const getAllPosts = ({
 } : GetPostApi) => {
 	const allPosts = query(
 			postsCollection,
-			orderBy(order, 'desc'),
+			orderBy('timestamp', 'desc'),
 			limit(limitSize),
 		);
 

@@ -19,13 +19,13 @@ const Feed = (props: IFeed) => {
   });
 
   const list = postsData?.docs ? postsData?.docs : null;
-  
   return list ? (
     <div className={style.feedContainer}>
       <PostForm/>
       {list.map((post: any, index: number) => {
         const postFields = post.data();
-
+        
+        console.log(postFields)
         return <PostCard
           key={`post-${post.id}-${index}`}
           fields={postFields}

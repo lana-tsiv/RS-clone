@@ -7,6 +7,8 @@ interface ITags {
 }
 
 const Tags = ({ tags }: ITags) => {
+  if(!tags) return null;
+
   return (
     <div className={style.tagsContainer}>
       {tags.map((tag, index) => (

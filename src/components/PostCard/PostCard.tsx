@@ -39,19 +39,19 @@ const PostCard = ({
       />
       <div className={style.content}>
         <div className={style.postCardHeader}>
-          <div className={style.title}>some</div>
+          <div className={style.title}>{fields?.title}</div>
         </div>
         <div className={style.text}>
           <p>{fields.text}</p>
         </div>
         <div className={style.image}>
-          <img
+         {fields?.images && <img
             className={style.size}
             src={fields.images[0]}
             alt='post image'
-          />
+          />}
         </div>
-        <Tags tags={fields.tags} />
+        {fields?.tags && <Tags tags={fields.tags} />}
         <PostActionPanel
             postId={postId}
             actionList={defaultPostPanelOptions}

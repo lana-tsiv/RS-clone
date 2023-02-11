@@ -2,19 +2,40 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	padding: 1rem 0 2rem;
+	padding: 5px;
 
 	.button {
 		width: 100%;
-		padding: 12px;
-		background-color: rgba(237, 242, 244, 0.2);
-		border: 1px solid #f13b1a;
+		
+		
 		border-radius: 5px;
 		cursor: pointer;
-		color: #f13b1a;
 		transition: all 0.3s ease-in-out;
+		
+
+		
+	}
+
+	.secondary {
+		padding: 5px;
+		font-weight: 400;
+		color: #0091ff;
+		background-color: white;
+		border: 1px solid #0091ff;
+
+		&:hover{
+			background-color: #0091ff;
+			color: #fff;
+		}
+	}
+
+	.primary {
+		padding: 12px;
 		font-size: 0.9rem;
 		font-weight: 700;
+		background-color: rgba(237, 242, 244, 0.2);
+		border: 1px solid #f13b1a;
+		color: #f13b1a;
 
 		&:hover{
 			background-color: #f13b1a;
