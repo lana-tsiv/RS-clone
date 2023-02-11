@@ -45,7 +45,7 @@ const PostCard = ({
           <p>{fields.text}</p>
         </div>
         <div className={style.image}>
-         {fields?.images && <img
+         {fields?.images?.[0] && <img
             className={style.size}
             src={fields.images[0]}
             alt='post image'

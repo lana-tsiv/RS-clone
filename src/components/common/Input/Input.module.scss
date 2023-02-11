@@ -3,7 +3,8 @@
 	gap: 10px;
 	display: flex;
 	flex-direction: column;
-	margin-bottom: 1rem;
+	margin-bottom: 20px;
+	position: relative;
 	
 	input {
 		padding: 5px;
@@ -21,4 +22,5 @@
 			text-transform: uppercase;
 		}
 	}
+
 }

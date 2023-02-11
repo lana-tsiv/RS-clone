@@ -1,15 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useForm } from 'react-hook-form';
+import * as yup from "yup";
+import { yupResolver } from '@hookform/resolvers/yup';
 
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
 import TextArea from "@/components/common/TextArea";
+import ImageInput from '@/components/common/ImageInput';
+
+import { usePosts } from "@/hooks/usePosts";
+import { uploadImage } from '@/utils/image';
 
 import style from "./PostForm.module.scss";
-import { usePosts } from "../../../hooks/usePosts";
-import { storage } from "@/firebaseClient/clientApp";
-import { uploadBytesResumable, ref, getDownloadURL } from "firebase/storage";
-import ImageInput from '@/components/common/ImageInput';
-import { uploadImage } from '@/utils/image';
+import { validationPost } from './schema';
+import Spinner from '../../common/Spinner/Spinner';
 
 interface IPostForm {
   field?: [];
@@ -20,21 +24,17 @@ const PostForm = (props: IPostForm) => {
   const [text, setText] = useState("");
   const [image, setImage] = useState<null | FileList >(null)
 
-  const { handleCreatePost } = usePosts();
+  const { handleCreatePost, isLoadingCreatePost } = usePosts();
 
-  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.target.value);
-  };
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value);
+  const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => setText(e.target.value);
+  const handleCreatePostClick = (data: any) => {
+    console.log(data)
+    image? uploadImage(image, handleSendPost): handleSendPost(null);
+  }
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => setImage(event.target.files);
 
-  const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setText(e.target.value);
-  };
-
-  const handleCreatePostClick = () => {
-    image? uploadImage(image, handleSendPost): null;
-  };
-
-  const handleSendPost = (url: string) => {
+  const handleSendPost = (url: string | null) => {
     handleCreatePost({
       userId: "7ty4kpyNv35QonTVsZMA",
       title,
@@ -42,31 +42,54 @@ const PostForm = (props: IPostForm) => {
       votesUp: 0,
       votesDown: 0,
       timestamp: Date.now(),
-      images: [url],
+      images: url ? [url] : [],
     });
   }
 
-  function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setImage(event.target.files);
-  }
+  const onSubmitHandler = (data: any) => {
+    console.log({ data,errors });
+  };
+
+  const {
+		formState: { errors },
+		handleSubmit,
+    register,
+	} = useForm<any>({
+		mode: 'all',
+    resolver: yupResolver( validationPost),
+		defaultValues: {
+      yupResolver: yupResolver( validationPost),
+			text: '',
+      title: '',
+		},
+	});
+
+  useEffect(() => {
+    console.log("🚀 ~ file: PostForm.tsx:47 ~ handleCheck ~ a", errors)
+  }, [errors])
 
   return (
     <div className={style.postFormContainer}>
+      {isLoadingCreatePost && <Spinner/>}
       <Input
         name='title'
         placeholder='Title'
         onInput={handleTitleChange}
+        register={register}
+        errorText={errors.title?.message as string}
       />
       <TextArea
-        name='content'
+        name='text'
         placeholder='Content'
         onInput={handleTextChange}
+        register={register}
+        errorText={errors.text?.message as string}
       />
       <ImageInput
         onChange={handleImageChange}
       />
       <Button
-        clickHandler={handleCreatePostClick}
+        clickHandler={handleSubmit(handleCreatePostClick)}
         text='Create post'
       />
     </div>

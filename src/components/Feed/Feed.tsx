@@ -25,7 +25,6 @@ const Feed = (props: IFeed) => {
       {list.map((post: any, index: number) => {
         const postFields = post.data();
         
-        console.log(postFields)
         return <PostCard
           key={`post-${post.id}-${index}`}
           fields={postFields}
