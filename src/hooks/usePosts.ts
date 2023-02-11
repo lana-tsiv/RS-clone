@@ -2,6 +2,7 @@ import { useMutation, useQuery } from '@/hooks/reactQuery';
 
 import { CREATE_POST, POSTS, VOTE_POST } from '@/constants/queryKeys';
 import { createPost, getAllPosts, updatePost } from '@/api/posts';
+import { IPost } from '../types/common';
 
 export const usePosts = (params?: any) => {
 
@@ -25,7 +26,7 @@ export const usePosts = (params?: any) => {
 	const {
 		mutate: handleCreatePost,
 		isLoading: isLoadingCreatePost,
-	} = useMutation({
+	} = useMutation<IPost>({
 		mutationKey: [CREATE_POST],
 		mutationFn: createPost,
 		onSuccess: () => {

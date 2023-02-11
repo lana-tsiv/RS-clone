@@ -4,6 +4,7 @@ import style from "./Feed.module.scss";
 import { usePosts } from "../../hooks/usePosts";
 import { OrderOptions } from "../../constants/enums";
 import PostCard from "../PostCard/PostCard";
+import PostForm from '../Form/PostForm/PostForm';
 
 interface IFeed {
   field?: [];
@@ -21,6 +22,7 @@ const Feed = (props: IFeed) => {
   
   return list ? (
     <div className={style.feedContainer}>
+      <PostForm/>
       {list.map((post: any, index: number) => {
         const postFields = post.data();
 

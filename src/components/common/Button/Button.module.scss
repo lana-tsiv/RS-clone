@@ -3,21 +3,21 @@
 	justify-content: center;
 	align-items: center;
 	padding: 1rem 0 2rem;
-	margin: 0 auto;
-	width: 70%;
 
 	.button {
 		width: 100%;
 		padding: 12px;
 		background-color: rgba(237, 242, 244, 0.2);
-		border: 1px solid #000;
+		border: 1px solid #f13b1a;
 		border-radius: 5px;
 		cursor: pointer;
+		color: #f13b1a;
 		transition: all 0.3s ease-in-out;
 		font-size: 0.9rem;
+		font-weight: 700;
 
 		&:hover{
-			background-color: #000;
+			background-color: #f13b1a;
 			color: #fff;
 		}
 	}

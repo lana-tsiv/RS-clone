@@ -1,0 +1,24 @@
+.inputContainer {
+	width: 100%;
+	gap: 10px;
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 1rem;
+	
+	input {
+		padding: 5px;
+		border-radius: 5px;
+		outline: none;
+		border: 1px solid #ccc;
+	}
+
+	label {
+		font-size: 1.2rem;
+		font-weight: 500;
+		color: #333;
+
+		&:first-letter{
+			text-transform: uppercase;
+		}
+	}
+}
