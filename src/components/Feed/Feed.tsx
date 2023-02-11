@@ -33,8 +33,14 @@ const Feed = (props: IFeed) => {
 
   React.useEffect(() => {
     if(inView)
-      pageHandler(pageSize+2)
+      pageHandler(pageSize+5)
+    
   }, [inView])
+
+
+  React.useEffect(() => {
+    console.log(pageSize)
+  },[pageSize])
 
   const { postsData } = usePosts({
     end: pageSize,
@@ -59,6 +65,7 @@ const Feed = (props: IFeed) => {
         />
       }
     )}
+    {inView && <span className={style.feedEnd}>End of Feed</span>}
     </div>
   ) : null;
 };

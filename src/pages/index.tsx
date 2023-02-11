@@ -11,10 +11,6 @@ export default function Home() {
     return (
     <div>
       <Feed/>
-      <Button 
-        text={text}
-        clickHandler={() => console.log('click')}
-      />
     </div>
   )
 }
