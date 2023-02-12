@@ -7,7 +7,7 @@ import ReactModal from "react-modal";
 import SignUpForm from '../AuthForm/SignUpForm';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 import { getAuth, signOut } from 'firebase/auth';
-import { setUserDisplayName, setUserEmail } from '@/slices/main';
+import { setUserDisplayName, setUserEmail, setSearchValue } from '@/slices/main';
 import { main } from '@/store/selectors';
 import Button from '../common/Button';
 import SignInForm from '../AuthForm/SignInForm';
@@ -21,7 +21,6 @@ const Header: React.FC = () => {
 
   const {
 		userDisplayName,
-    userEmail,
 	} = useAppSelector(main);
 
   const dispatch = useAppDispatch();
@@ -29,6 +28,8 @@ const Header: React.FC = () => {
   const isAuth = !!userDisplayName;
 
 	const auth = getAuth();
+
+  const handleSearch = (searchValue: string) => dispatch(setSearchValue({ searchValue}))
 
 	auth.onAuthStateChanged(user => {
 		if (user) {
@@ -53,6 +54,11 @@ const Header: React.FC = () => {
       });
   }
 
+  const searchHandler= (e: any) => {
+    console.log('CALl')
+    handleSearch(e.target.value)
+  }
+
   const openModal = () => setIsOpen(true); 
 
   const closeModal = () => setIsOpen(false);
@@ -63,7 +69,7 @@ const Header: React.FC = () => {
         <RedditLogo />
         <RedditTextLogo />
       </div>
-      <Search />
+      <Search onSearch={searchHandler}/>
       <div className={style.header_buttons__wrapper}>
         <div className={style.userDisplayName}>{userDisplayName}</div>
         <Button

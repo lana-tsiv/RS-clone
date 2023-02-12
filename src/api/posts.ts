@@ -1,37 +1,39 @@
 import { 
 	query,
-	getDoc,
 	getDocs,
-	where,
-	endAt,
-	startAt,
 	orderBy,
 	addDoc,
 	limit,
 	updateDoc,
-	doc
+	where,
 } from 'firebase/firestore';
 
 import { postsCollection } from '@/firebaseClient/collections';
 import { postDocument } from '@/firebaseClient/docs';
+import { OrderOptions } from '@/constants/enums';
 
 import { IPost } from '@/types/common';
 import { GetPostApi } from '@/types/api';
-import { OrderOptions } from '@/constants/enums';
 
 export const getAllPosts = ({
-	end=10,
-	start=0,
 	sortFieldName: order=OrderOptions.votesUp,
 	sortDirection: direction = 'desc',
+	searchValue,
 	limitSize
 } : GetPostApi) => {
 	console.log( order, direction, limitSize)
-	const allPosts = query(
+	const allPosts = searchValue && searchValue!=='' ? 
+	 query(
+			postsCollection,
+			orderBy(order, direction),
+			where('title', '==', searchValue),
+			limit(limitSize),
+		) 
+	: query(
 			postsCollection,
 			orderBy(order, direction),
 			limit(limitSize),
-		);
+		) 
 
 	return getDocs(allPosts);
 }

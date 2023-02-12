@@ -7,4 +7,5 @@ export interface GetPostApi {
 	sortFieldName: OrderOptions,
 	sortDirection: OrderByDirection,
 	limitSize: number
+	searchValue: string
 }

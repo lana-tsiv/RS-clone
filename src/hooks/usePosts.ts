@@ -15,6 +15,7 @@ export const usePosts = (params?: any) => {
 		limitSize,
 		sortFieldName,
 		sortDirection,
+		searchValue
 	} = params || {};
 
     const {
@@ -27,8 +28,16 @@ export const usePosts = (params?: any) => {
 			limitSize,
 			sortFieldName,
 			sortDirection,
+			searchValue
 		],
-		queryFn: () => getAllPosts({ end, start, sortFieldName, sortDirection,limitSize }),
+		queryFn: () => getAllPosts({ 
+			end,
+			start,
+			sortFieldName,
+			sortDirection,
+			limitSize,
+			searchValue
+		}),
 		refetchOnWindowFocus: false,
 		onSuccess: () => {
 			console.log('POSTS FETCHED')

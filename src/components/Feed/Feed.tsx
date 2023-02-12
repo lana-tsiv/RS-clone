@@ -3,6 +3,7 @@ import { useInView } from 'react-intersection-observer'
 
 import PostCard from "@/components/PostCard/PostCard";
 import PostForm from '@/components/Form/PostForm/PostForm';
+import Select from '@/components/common/Select';
 
 import { usePosts } from "@/hooks/usePosts";
 import { OrderOptions } from "@/constants/enums";
@@ -11,7 +12,6 @@ import { setPageSize, setSort } from '@/slices/main';
 import { main } from '@/store/selectors'
 
 import style from "./Feed.module.scss";
-import Select from '../common/Select';
 
 const options = [
   {
@@ -44,7 +44,8 @@ const Feed = (props: IFeed) => {
 		pageSize,
     userDisplayName,
     sortFieldName,
-    sortDirection
+    sortDirection,
+    searchValue
 	} = useAppSelector(main);
 
   const pageHandler = (pageSize: number) => dispatch(setPageSize({ pageSize }));
@@ -58,8 +59,7 @@ const Feed = (props: IFeed) => {
   }
 
   React.useEffect(() => {
-    if(inView)
-      pageHandler(pageSize+5)
+    if(inView) pageHandler(pageSize+5)
     
   }, [inView])
 
@@ -74,12 +74,12 @@ const Feed = (props: IFeed) => {
     limitSize: pageSize,
     sortFieldName: sortFieldName? sortFieldName : OrderOptions.votesUp,
     sortDirection: sortDirection? sortDirection : 'desc',
+    searchValue
   });
 
   const list = postsData?.docs ? postsData?.docs : null;
   return list ? (
     <div className={style.feedContainer}>
-     
       {userDisplayName && <PostForm/>}
       <div className={style.sortPanel}>
         <Select
