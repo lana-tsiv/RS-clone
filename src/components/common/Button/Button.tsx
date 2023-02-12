@@ -8,6 +8,7 @@ interface IButton {
   text: string;
   clickHandler: () => void;
   isSecondary?: boolean;
+  isSmall?: boolean;
 }
 
 const mockPost = {
@@ -20,10 +21,16 @@ const mockPost = {
   votesUp: 1,
 };
 
-const Button = ({text, clickHandler, isSecondary}: IButton) => {
+const Button = ({
+  text,
+  clickHandler,
+  isSecondary,
+  isSmall
+}: IButton) => {
   const btnClass = cn(style.button, {
     [style.secondary]: isSecondary,
     [style.primary]: !isSecondary,
+    [style.small]: isSmall,
   })
 
   return (

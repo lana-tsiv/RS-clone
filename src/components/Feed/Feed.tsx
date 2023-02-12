@@ -3,14 +3,34 @@ import { useInView } from 'react-intersection-observer'
 
 import PostCard from "@/components/PostCard/PostCard";
 import PostForm from '@/components/Form/PostForm/PostForm';
+import Select from '@/components/common/Select';
 
 import { usePosts } from "@/hooks/usePosts";
 import { OrderOptions } from "@/constants/enums";
 import { useAppDispatch, useAppSelector } from '@/store/store';
-import { setPageSize } from '@/slices/main';
+import { setPageSize, setSort } from '@/slices/main';
 import { main } from '@/store/selectors'
 
 import style from "./Feed.module.scss";
+
+const options = [
+  {
+    value: `${OrderOptions.votesUp}-asc`,
+    label: 'Votes Asc'
+  },
+  {
+    value: `${OrderOptions.votesUp}-desc`,
+    label: 'Votes Desc'
+  },
+  {
+    value: `${OrderOptions.timestamp}-asc`,
+    label: 'Date Asc'
+  },
+  {
+    value: `${OrderOptions.timestamp}-desc`,
+    label: 'Date Desc'
+  },
+]
 
 interface IFeed {
   field?: [];
@@ -21,18 +41,25 @@ const Feed = (props: IFeed) => {
   const { ref, inView } = useInView()
 
   const {
-		page,
 		pageSize,
-		sortDirection,
-		sortFieldName,
-		searchValue,
+    userDisplayName,
+    sortFieldName,
+    sortDirection,
+    searchValue
 	} = useAppSelector(main);
 
   const pageHandler = (pageSize: number) => dispatch(setPageSize({ pageSize }));
 
+  const sortHandler = ({sortFieldName, sortDirection }: any) => dispatch(setSort({ sortFieldName, sortDirection }));
+
+  const selectHandler = (e: any) => {
+    const [sortFieldName, sortDirection] = e.target.value.split('-');
+    console.log(sortFieldName, sortDirection)
+    sortHandler({sortFieldName, sortDirection})
+  }
+
   React.useEffect(() => {
-    if(inView)
-      pageHandler(pageSize+5)
+    if(inView) pageHandler(pageSize+5)
     
   }, [inView])
 
@@ -44,15 +71,24 @@ const Feed = (props: IFeed) => {
   const { postsData } = usePosts({
     end: pageSize,
     start: 0,
-    order: OrderOptions.votesUp,
     limitSize: pageSize,
+    sortFieldName: sortFieldName? sortFieldName : OrderOptions.votesUp,
+    sortDirection: sortDirection? sortDirection : 'desc',
+    searchValue
   });
 
   const list = postsData?.docs ? postsData?.docs : null;
   return list ? (
     <div className={style.feedContainer}>
-     
-      <PostForm/>
+      {userDisplayName && <PostForm/>}
+      <div className={style.sortPanel}>
+        <Select
+          options={options}
+          onChange={selectHandler}
+          name="sort"
+          title="Sort by"
+        />
+      </div>
       {list.map((post: any, index: number) => {
         const postFields = post.data();
 
@@ -61,6 +97,7 @@ const Feed = (props: IFeed) => {
           fields={postFields}
           postId={post.id}
           refView={list?.length - 1!= index ? null : ref}
+          commentsCount={!!postFields?.commentsCount ? postFields?.commentsCount : 0}
         />
       }
     )}

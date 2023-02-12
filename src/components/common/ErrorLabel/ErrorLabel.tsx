@@ -1,14 +1,21 @@
 import React from 'react';
 
 import style from './ErrorLabel.module.scss'
+import cn from 'classnames';
 
 interface IErrorLabel {
   errorText?: string;
+  isFormLabel?: boolean;
 }
 
-const ErrorLabel = ({ errorText }: IErrorLabel) =>{
+const ErrorLabel = ({ isFormLabel, errorText }: IErrorLabel) =>{
+	const className= cn(style.errorText, {
+		[style.formLabel]: isFormLabel,
+		[style.inputLabel]: !isFormLabel,
+	})
+	
 	return errorText ? 
-		<span className={style.errorText}>{errorText}</span>
+		<span className={className}>{errorText}</span>
 		: null
 }
 
