@@ -12,9 +12,9 @@ export const usePosts = (params?: any) => {
     const {
 		end,
 		start,
-		order,
 		limitSize,
-
+		sortFieldName,
+		sortDirection,
 	} = params || {};
 
     const {
@@ -24,9 +24,11 @@ export const usePosts = (params?: any) => {
 	} = useQuery({
 		queryKey: [
 			POSTS,
-			limitSize
+			limitSize,
+			sortFieldName,
+			sortDirection,
 		],
-		queryFn: () => getAllPosts({ end, start, order,limitSize }),
+		queryFn: () => getAllPosts({ end, start, sortFieldName, sortDirection,limitSize }),
 		refetchOnWindowFocus: false,
 		onSuccess: () => {
 			console.log('POSTS FETCHED')

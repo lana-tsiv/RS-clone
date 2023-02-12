@@ -22,12 +22,14 @@ import { OrderOptions } from '@/constants/enums';
 export const getAllPosts = ({
 	end=10,
 	start=0,
-	order=OrderOptions.votesUp,
+	sortFieldName: order=OrderOptions.votesUp,
+	sortDirection: direction = 'desc',
 	limitSize
 } : GetPostApi) => {
+	console.log( order, direction, limitSize)
 	const allPosts = query(
 			postsCollection,
-			orderBy('timestamp', 'desc'),
+			orderBy(order, direction),
 			limit(limitSize),
 		);
 

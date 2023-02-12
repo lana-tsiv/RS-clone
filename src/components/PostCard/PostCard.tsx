@@ -25,7 +25,6 @@ const PostCard = ({
   postId,
   refView
 }: IPostCard) => {
-console.log(commentsCount)
   const comments = [
     {
       icon: CommentIcon, 
