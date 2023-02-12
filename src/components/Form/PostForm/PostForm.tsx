@@ -13,6 +13,8 @@ import { uploadImage } from '@/utils/image';
 import { validationPost } from './schema';
 
 import style from "./PostForm.module.scss";
+import { useAppSelector } from '@/store/store';
+import { main } from '@/store/selectors';
 
 interface IPostForm {
   field?: [];
@@ -22,6 +24,11 @@ const PostForm = (props: IPostForm) => {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [image, setImage] = useState<null | FileList >(null)
+
+  const {
+		userDisplayName,
+    userEmail,
+	} = useAppSelector(main);
 
   const { handleCreatePost, isLoadingCreatePost } = usePosts();
 
@@ -34,6 +41,10 @@ const PostForm = (props: IPostForm) => {
   }
 
   const handleSendPost = (url: string | null) => {
+    const cred = userDisplayName && userEmail ? {
+      displayName: userDisplayName,
+      email: userEmail,
+    } : {};
     handleCreatePost({
       userId: "7ty4kpyNv35QonTVsZMA",
       title,
@@ -42,6 +53,7 @@ const PostForm = (props: IPostForm) => {
       votesDown: 0,
       timestamp: Date.now(),
       images: url ? [url] : [],
+      ...cred 
     });
   }
 

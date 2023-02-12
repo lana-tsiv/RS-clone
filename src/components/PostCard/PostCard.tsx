@@ -10,6 +10,7 @@ import CommentIcon from "@/components/common/CommentIcon";
 import { IPost } from "@/types/common";
 
 import style from "./PostCard.module.scss";
+import { dateFormattingWithSlash } from '@/utils/dateFormat';
 
 interface IPostCard {
   fields: IPost;
@@ -18,19 +19,19 @@ interface IPostCard {
   refView?: any;
 }
 
-const defaultPostPanelOptions = [
-  {
-    text: <FormattedMessage id="defaultPostPanelOptions.comments" defaultMessage="comments" />,
-    icon: CommentIcon
-  }
-]
-
 const PostCard = ({
   fields,
   commentsCount,
   postId,
   refView
 }: IPostCard) => {
+console.log(commentsCount)
+  const comments = [
+    {
+      icon: CommentIcon, 
+      text: `comments ${commentsCount}`
+    }
+  ]
 
   return (
     <div className={style.postCardContainer} ref={refView? refView : null}>
@@ -39,6 +40,14 @@ const PostCard = ({
         postId={postId}
       />
       <div className={style.content}>
+        <div className={style.postInfo}>
+          <div className={style.author}>
+            {fields?.displayName}
+          </div>
+          <div className={style.timestamp}>
+            {dateFormattingWithSlash(fields?.timestamp).toString()}
+          </div>
+        </div>
         <div className={style.postCardHeader}>
           <div className={style.title}>{fields?.title}</div>
         </div>
@@ -55,7 +64,7 @@ const PostCard = ({
         {fields?.tags && <Tags tags={fields.tags} />}
         <PostActionPanel
             postId={postId}
-            actionList={defaultPostPanelOptions}
+            actionList={comments}
         />
       </div>
     </div>

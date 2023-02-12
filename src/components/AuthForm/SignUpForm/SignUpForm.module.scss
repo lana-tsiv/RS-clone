@@ -21,9 +21,20 @@
   position: relative;
 }
 
-.errorWrapper {
+.redirectWrapper {
+	margin-top: 10px;
+	display: inline-flex;
+	align-self: center;
 	span {
+		color: blue;
+		cursor: pointer;
+	}
+}
 
+.errorWrapper {
+	display: flex;
+	justify-content: space-around;
+	span {
 		font-size: 16px;
 	}
 }

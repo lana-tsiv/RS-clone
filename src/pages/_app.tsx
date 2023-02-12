@@ -22,13 +22,6 @@ export default function App({Component, pageProps}: AppProps) {
         <Provider store={store}>
             <QueryClientProvider client={queryClient}>
                 <I18nProvider locale={locale}>
-                    <div className={styles.lang}>
-                        {translate('hello')}
-                        <div className={styles.btnWrap}>
-                            <button className={styles.button} onClick={() => {setLocal(LOCALES.ENGLISH)}}>Eng</button>
-                            <button className={styles.button}  onClick={() => {setLocal(LOCALES.GERMAN)}}>De</button>
-                        </div>
-                    </div>
                     <Layout>
                         <Component {...pageProps} />
                     </Layout>

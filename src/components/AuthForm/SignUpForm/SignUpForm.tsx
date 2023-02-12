@@ -13,10 +13,11 @@ import { setUserDisplayName, setUserEmail } from '@/slices/main';
 import ErrorLabel from '../../common/ErrorLabel/ErrorLabel';
 
 interface ISignUpForm {
-  field?: [];
+  toggleForm : () => void;
+  closeModal: () => void;
 }
 
-const SignUpForm = (props: ISignUpForm) => {
+const SignUpForm = ({closeModal, toggleForm}: ISignUpForm) => {
   const dispatch = useAppDispatch();
 
   const [name, setName] = useState("");
@@ -35,11 +36,6 @@ const SignUpForm = (props: ISignUpForm) => {
     dispatch(setUserDisplayName({ userDisplayName }));
   const userEmailHandler = (userEmail: string | null) => dispatch(setUserEmail({ userEmail }));
 
-  const {
-		userDisplayName,
-    userEmail,
-	} = useAppSelector(main);
-
   const handleSendSignUp = () => {
    const auth = getAuth();
    createUserWithEmailAndPassword(auth, email, password)
@@ -51,6 +47,7 @@ const SignUpForm = (props: ISignUpForm) => {
         userDisplayNameHandler(userCredential.user.displayName);
         userEmailHandler(userCredential.user.email)
         reset();
+        closeModal()
       })
       .catch((err) => {
         console.log('...oops', err)
@@ -68,7 +65,6 @@ const SignUpForm = (props: ISignUpForm) => {
     });
   }
 
-  const auth = getAuth();
   const {
     formState: { errors },
     handleSubmit,
@@ -127,13 +123,20 @@ const SignUpForm = (props: ISignUpForm) => {
         errorText={errors.passwordConfirm?.message as string}
       />
       <div className={style.errorWrapper}>
-        {formError && <ErrorLabel errorText='Sorry, user with this email already exists...'/>}
+        {formError && <ErrorLabel isFormLabel errorText='Sorry, user with this email already exists...'/>}
       </div>
       <Button
-        // clickHandler={handleSubmit(handleSendSignUp)}
-        clickHandler={handleSendSignUp}
+        clickHandler={handleSubmit(handleSendSignUp)}
         text='Sign Up'
       />
+      <div className={style.redirectWrapper}>Account already exists? 
+        <span 
+          onClick={toggleForm}
+          className={style.redirect}
+        >
+          &nbsp;Sign In 
+        </span>
+      </div>
     </div>
   );
 };

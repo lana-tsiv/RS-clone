@@ -5,7 +5,8 @@
   align-items: center;
   justify-content: space-between;
   background-color: #ffffff;
-
+  max-width: 1170px;
+  margin: 0 auto;
   &_buttons,
   &_logo {
     &__wrapper {

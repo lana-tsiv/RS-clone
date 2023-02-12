@@ -6,15 +6,19 @@ import Search from "./Search";
 import ReactModal from "react-modal";
 import SignUpForm from '../AuthForm/SignUpForm';
 import { useAppDispatch, useAppSelector } from '@/store/store';
-import { getAuth } from 'firebase/auth';
+import { getAuth, signOut } from 'firebase/auth';
 import { setUserDisplayName, setUserEmail } from '@/slices/main';
 import { main } from '@/store/selectors';
 import Button from '../common/Button';
+import SignInForm from '../AuthForm/SignInForm';
 
 const Header: React.FC = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [isSignIn, setIsSignIn] = useState(true);
   
+  const handleSignIn = () => setIsSignIn(true);
+  const handleSignUp = () => setIsSignIn(false);
+
   const {
 		userDisplayName,
     userEmail,
@@ -37,6 +41,18 @@ const Header: React.FC = () => {
 		}
 	});
 
+   const handleSendSignUp = () => {
+    signOut(auth)
+      .then(() => {
+          console.log('sign out')
+          dispatch(setUserDisplayName({ userDisplayName: null }));
+          dispatch(setUserEmail({ userEmail: null}));
+      })
+      .catch((err) => {
+        console.log('...oops', err)
+      });
+  }
+
   const openModal = () => setIsOpen(true); 
 
   const closeModal = () => setIsOpen(false);
@@ -49,13 +65,13 @@ const Header: React.FC = () => {
       </div>
       <Search />
       <div className={style.header_buttons__wrapper}>
+        <div className={style.userDisplayName}>{userDisplayName}</div>
         <Button
-          clickHandler={openModal}
-          text={isAuth ? 'log out':'login'}
+          clickHandler={!isAuth ? openModal : handleSendSignUp}
+          text={isAuth ? 'log out':'log in'}
           isSecondary
         />
       </div>
-      <div className={style.userDisplayName}>{userDisplayName}</div>
       <ReactModal
         className={style.header_modal}
         isOpen={modalIsOpen}
@@ -68,7 +84,11 @@ const Header: React.FC = () => {
               text='Close'
               isSecondary
             />
-         {isSignIn ? <SignUpForm/>: null}
+         {
+         !isSignIn ? 
+          <SignUpForm closeModal={closeModal} toggleForm={handleSignIn}/>
+          : <SignInForm closeModal={closeModal} toggleForm={handleSignUp}/>
+         }
         </div>
       </ReactModal>
     </header>

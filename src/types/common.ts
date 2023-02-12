@@ -1,4 +1,6 @@
 export interface IPost {
+	displayName? : string;
+	email?: string;
 	postId?: string;
 	title?: string;
 	votesUp: number;
