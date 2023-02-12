@@ -3,6 +3,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 interface InitialState {
 	page: number;
 	pageSize: number;
+	userDisplayName: string | null;
+	userEmail: string | null;
 	sortDirection: boolean | null;
 	sortFieldName: string | null;
 	searchValue: string;
@@ -14,12 +16,20 @@ const initialState: InitialState = {
 	sortDirection: false,
 	sortFieldName: null,
 	searchValue: '',
+	userDisplayName: null,
+	userEmail: null,
 };
 
 const common = createSlice({
 	name: 'main',
 	initialState,
 	reducers: {
+		setUserEmail: (state, action: PayloadAction<{ userEmail: string | null }>) => {
+			state.userEmail = action.payload.userEmail;
+		},
+		setUserDisplayName: (state, action: PayloadAction<{ userDisplayName: string | null }>) => {
+			state.userDisplayName = action.payload.userDisplayName;
+		},
 		setPage: (state, action: PayloadAction<{ page: number }>) => {
 			state.page = action.payload.page;
 		},
@@ -46,6 +56,8 @@ export const {
 	setPageSize,
 	setSort,
 	setSearchValue,
+	setUserEmail,
+	setUserDisplayName,
 } = common.actions;
 
 export default common.reducer;

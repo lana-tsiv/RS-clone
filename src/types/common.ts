@@ -9,3 +9,16 @@ export interface IPost {
 	userId: string;
 	text: string;
 }
+
+export interface ModalProps {
+	className?: string;
+	component: React.ComponentType<any>;
+	isConfirmModalNeeded?: boolean;
+	isDirtyForm?: boolean;
+	onClose: () => void;
+	outerProps?: Record<string, any>;
+	title?: string;
+	width?: string;
+	withScrollableContent?: boolean;
+	minWidth?: string;
+}
