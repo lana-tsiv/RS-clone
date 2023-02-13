@@ -1,12 +1,14 @@
 import { usePosts } from '@/hooks/usePosts';
 import React from "react";
 import { useState, useEffect } from "react";
-
+import cn from "classnames";
 import style from "./Button.module.scss";
 
 interface IButton {
   text: string;
   clickHandler: () => void;
+  isSecondary?: boolean;
+  isSmall?: boolean;
 }
 
 const mockPost = {
@@ -19,10 +21,21 @@ const mockPost = {
   votesUp: 1,
 };
 
-const Button = ({text, clickHandler}: IButton) => {
+const Button = ({
+  text,
+  clickHandler,
+  isSecondary,
+  isSmall
+}: IButton) => {
+  const btnClass = cn(style.button, {
+    [style.secondary]: isSecondary,
+    [style.primary]: !isSecondary,
+    [style.small]: isSmall,
+  })
+
   return (
     <div className={style.buttonContainer}>
-      <button className={style.button} onClick={clickHandler}>{text}</button>
+      <button className={btnClass} onClick={clickHandler}>{text}</button>
     </div>
   );
 };

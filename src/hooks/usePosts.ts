@@ -1,15 +1,21 @@
 import { useMutation, useQuery } from '@/hooks/reactQuery';
+import { useQueryClient } from '@tanstack/react-query';
 
 import { CREATE_POST, POSTS, VOTE_POST } from '@/constants/queryKeys';
 import { createPost, getAllPosts, updatePost } from '@/api/posts';
 
+import { IPost } from '@/types/common';
+
 export const usePosts = (params?: any) => {
+	const queryClient = useQueryClient();
 
     const {
 		end,
 		start,
-		order,
 		limitSize,
+		sortFieldName,
+		sortDirection,
+		searchValue
 	} = params || {};
 
     const {
@@ -17,19 +23,35 @@ export const usePosts = (params?: any) => {
 		isLoading: isLoadingPosts,
 		isFetching: isFetchingPosts,
 	} = useQuery({
-		queryKey: [POSTS],
-		queryFn: () => getAllPosts({ end, start, order,limitSize }),
+		queryKey: [
+			POSTS,
+			limitSize,
+			sortFieldName,
+			sortDirection,
+			searchValue
+		],
+		queryFn: () => getAllPosts({ 
+			end,
+			start,
+			sortFieldName,
+			sortDirection,
+			limitSize,
+			searchValue
+		}),
 		refetchOnWindowFocus: false,
+		onSuccess: () => {
+			console.log('POSTS FETCHED')
+		}
 	});
 
 	const {
 		mutate: handleCreatePost,
 		isLoading: isLoadingCreatePost,
-	} = useMutation({
+	} = useMutation<IPost>({
 		mutationKey: [CREATE_POST],
 		mutationFn: createPost,
 		onSuccess: () => {
-			console.log('POST ADDED')
+			return [ queryClient.invalidateQueries([POSTS]) ];
 		},
 	});
 

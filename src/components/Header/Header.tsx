@@ -4,20 +4,64 @@ import RedditTextLogo from "../common/RedditTextLogo";
 import style from "./Header.module.scss";
 import Search from "./Search";
 import ReactModal from "react-modal";
-import ModalLogIn from "./ModalLogIn";
-import CloseLogo from "../common/CloseLogo";
-import translate from "@/i18n/translate";
+import SignUpForm from '../AuthForm/SignUpForm';
+import { useAppDispatch, useAppSelector } from '@/store/store';
+import { getAuth, signOut } from 'firebase/auth';
+import { setUserDisplayName, setUserEmail, setSearchValue } from '@/slices/main';
+import { main } from '@/store/selectors';
+import Button from '../common/Button';
+import SignInForm from '../AuthForm/SignInForm';
 
 const Header: React.FC = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [isSignIn, setIsSignIn] = useState(true);
+  
+  const handleSignIn = () => setIsSignIn(true);
+  const handleSignUp = () => setIsSignIn(false);
 
-  function openModal() {
-    setIsOpen(true);
+  const {
+		userDisplayName,
+	} = useAppSelector(main);
+
+  const dispatch = useAppDispatch();
+
+  const isAuth = !!userDisplayName;
+
+	const auth = getAuth();
+
+  const handleSearch = (searchValue: string) => dispatch(setSearchValue({ searchValue}))
+
+	auth.onAuthStateChanged(user => {
+		if (user) {
+			dispatch(setUserDisplayName({ userDisplayName: user.displayName }));
+			dispatch(setUserEmail({ userEmail: user.email }));
+		}
+		else {
+			dispatch(setUserDisplayName({ userDisplayName: null}));
+			dispatch(setUserEmail({ userEmail: null}));
+		}
+	});
+
+   const handleSendSignUp = () => {
+    signOut(auth)
+      .then(() => {
+          console.log('sign out')
+          dispatch(setUserDisplayName({ userDisplayName: null }));
+          dispatch(setUserEmail({ userEmail: null}));
+      })
+      .catch((err) => {
+        console.log('...oops', err)
+      });
   }
 
-  function closeModal() {
-    setIsOpen(false);
+  const searchHandler= (e: any) => {
+    console.log('CALl')
+    handleSearch(e.target.value)
   }
+
+  const openModal = () => setIsOpen(true); 
+
+  const closeModal = () => setIsOpen(false);
 
   return (
     <header className={style.header}>
@@ -25,25 +69,32 @@ const Header: React.FC = () => {
         <RedditLogo />
         <RedditTextLogo />
       </div>
-      <Search />
+      <Search onSearch={searchHandler}/>
       <div className={style.header_buttons__wrapper}>
-        <button className={style.header_buttons__button}>
-            {translate('header.button.getApp')}
-        </button>
-        <button className={style.header_buttons__button} onClick={openModal}>
-            {translate('header.button.logIn')}
-        </button>
+        <div className={style.userDisplayName}>{userDisplayName}</div>
+        <Button
+          clickHandler={!isAuth ? openModal : handleSendSignUp}
+          text={isAuth ? 'log out':'log in'}
+          isSecondary
+        />
       </div>
       <ReactModal
         className={style.header_modal}
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
+        ariaHideApp={false}
       >
         <div className={style.header_modal__wrapper}>
-          <button className={style.header_modal__close} onClick={closeModal}>
-            <CloseLogo />
-          </button>
-          <ModalLogIn />
+            <Button
+              clickHandler={closeModal}
+              text='Close'
+              isSecondary
+            />
+         {
+         !isSignIn ? 
+          <SignUpForm closeModal={closeModal} toggleForm={handleSignIn}/>
+          : <SignInForm closeModal={closeModal} toggleForm={handleSignUp}/>
+         }
         </div>
       </ReactModal>
     </header>

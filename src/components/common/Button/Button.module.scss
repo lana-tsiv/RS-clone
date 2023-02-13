@@ -2,22 +2,38 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	padding: 1rem 0 2rem;
-	margin: 0 auto;
-	width: 70%;
+	padding: 5px;
 
 	.button {
-		width: 100%;
-		padding: 12px;
-		background-color: rgba(237, 242, 244, 0.2);
-		border: 1px solid #000;
+		width: fit-content;
 		border-radius: 5px;
 		cursor: pointer;
 		transition: all 0.3s ease-in-out;
-		font-size: 0.9rem;
+	}
+
+	.secondary {
+		padding: 5px;
+		font-weight: 400;
+		color: #0091ff;
+		background-color: white;
+		border: 1px solid #0091ff;
 
 		&:hover{
-			background-color: #000;
+			background-color: #0091ff;
+			color: #fff;
+		}
+	}
+
+	.primary {
+		padding: 12px;
+		font-size: 0.9rem;
+		font-weight: 700;
+		background-color: rgba(237, 242, 244, 0.2);
+		border: 1px solid #f13b1a;
+		color: #f13b1a;
+
+		&:hover{
+			background-color: #f13b1a;
 			color: #fff;
 		}
 	}
