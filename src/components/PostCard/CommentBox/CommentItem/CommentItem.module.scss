@@ -43,3 +43,21 @@
   font-size: 0.9rem;
   color: #303031;
 }
+
+.actionsWrap {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  font-size: 0.8rem;
+  margin-top: 4px;
+
+  .commentActions {
+    color: #cdcbcb;
+
+    &:hover {
+      color: #66bdf4;
+      cursor: pointer;
+
+    }
+  }
+}
