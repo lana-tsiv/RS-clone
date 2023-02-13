@@ -1,0 +1,22 @@
+.title {
+  font-size: 1rem;
+  font-weight: normal;
+  color: #6d6d6e;
+  padding: 12px 0;
+}
+
+.commentsContainer {
+  border: 1px solid rgba(109, 109, 110, 0.13);
+  max-height: 220px;
+  overflow-y: scroll;
+  padding: 6px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.btnWrap {
+  display: flex;
+  flex-direction: row;
+  padding: 0 48px;
+}
