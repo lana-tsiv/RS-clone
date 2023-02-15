@@ -4,7 +4,11 @@ import translate from "@/i18n/translate";
 
 import styles from "./GoogleButton.module.scss";
 
-const GoogleButton: React.FC = () => {
+interface IGoogleButton {
+  closeModal: () => void;
+}
+
+const GoogleButton = ({ closeModal }: IGoogleButton) => {
   const [error, setError] = useState(null);
 
   const handleGoogleLogin = async () => {
@@ -14,6 +18,7 @@ const GoogleButton: React.FC = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
         const credential = GoogleAuthProvider.credentialFromResult(result);
+        closeModal();
         const token = credential?.accessToken;
         const user = result.user;
       })
