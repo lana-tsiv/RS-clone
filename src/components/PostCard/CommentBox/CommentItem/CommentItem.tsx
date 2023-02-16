@@ -15,6 +15,9 @@ interface commentProps {
     updateComment: any,
     isEditable?: boolean,
     isDeletable?: boolean,
+    currentUserId: string,
+    handleSubmit: (text: string, postId: string, replyId: string) => void,
+    parentId: string | null,
 }
 
 const CommentItem = ({
@@ -30,9 +33,18 @@ const CommentItem = ({
                          updateComment,
                          isEditable,
                          isDeletable,
+                         currentUserId,
+                         handleSubmit,
+                         parentId = null,
                      }: commentProps) => {
 
     const isEditing = activeComment && activeComment.id === id && activeComment.type === "editing";
+    const isReplying = activeComment
+        && activeComment.currentUserId === currentUserId
+        && activeComment.id === id && activeComment.type === "replying";
+
+    const replyId = parentId ? parentId : id;
+    const canReply = parentId === null;
 
     return (
         <div className={styles.commentWrap}>
@@ -50,16 +62,20 @@ const CommentItem = ({
                         handleSubmit={(comment: string) => updateComment(comment, postId)}
                         initialText={comment}
                         hasCancelButton={true}
-                        handleCancel={() => setActiveComment(null)}
+                        handleCancel={() => setActiveComment({id: ''})}
                     />
                 )}
                 <div className={styles.actionsWrap}>
-                    <div className={styles.commentActions}>Reply</div>
+                    {canReply && (<div
+                        className={styles.commentActions}
+                        onClick={() => setActiveComment({id: id, type: 'replying', currentUserId: currentUserId})}
+                    >
+                        Reply
+                    </div>)}
                     {isEditable && (
                         <div
                             className={styles.commentActions}
-                            onClick={() =>
-                                setActiveComment({id: id, type: "editing"})}
+                            onClick={() => setActiveComment({id: id, type: "editing"})}
                         >
                             Edit
                         </div>
@@ -73,6 +89,37 @@ const CommentItem = ({
                         </div>
                     )}
                 </div>
+                {isReplying && <CommentForm submitLabel={'Reply'}
+                                            postId={postId}
+                                            handleSubmit={(text) => handleSubmit(text, postId, replyId)}
+                                            hasCancelButton={true}
+                                            handleCancel={() => setActiveComment({id: ''})}
+                                            initialText={''}
+                />}
+                {replies.length > 0 && (
+                    <div className={styles.replies}>
+                        {replies.map((item: any) => {
+                            return (
+                                <CommentItem
+                                    key={item.id}
+                                    author={item.author}
+                                    time={new Date(item.time).toLocaleString()}
+                                    comment={item.message}
+                                    postId={item.postId}
+                                    replies={[]}
+                                    id={item.id}
+                                    currentUserId={id}
+                                    deleteComment={deleteComment}
+                                    activeComment={activeComment}
+                                    setActiveComment={setActiveComment}
+                                    handleSubmit={handleSubmit}
+                                    updateComment={updateComment}
+                                    parentId={item.id}
+                                />
+                            );
+                        })}
+                    </div>
+                )}
             </div>
         </div>
     );

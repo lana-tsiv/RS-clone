@@ -23,14 +23,16 @@ const CommentBox = ({postId}: { postId: string }) => {
         });
     };
 
-    const handleSubmit = (comment: string, postId: string) => {
-        const timePosted = new Date().toLocaleString();
+    const handleSubmit = (comment: string, postId: string, parentId: string | null = null) => {
+        const now = new Date();
+        const timePosted = now.getTime();
         const docRef = addDoc(collection(db, "comments"), {
             author: user,
             message: comment,
             time: timePosted,
             postId: postId,
             userId: currentUserId,
+            parentId: parentId
         });
         docRef.then(() => {
             getData().then((data) => {
@@ -40,8 +42,13 @@ const CommentBox = ({postId}: { postId: string }) => {
         setActiveComment({id: ''});
     }
 
-    const getReplies = (id: string) => array.filter((item) => item.id === id)
-        .sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+    const filteredComments = array.filter((item) => item.postId === postId)
+        .sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime());
+
+    const getReplies = (id: string) => {
+        return array.filter((item) => item.parentId !== null && item.parentId === id)
+            .sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime());
+    }
 
     useEffect(() => {
         getData().then((data) => {
@@ -97,12 +104,12 @@ const CommentBox = ({postId}: { postId: string }) => {
             />
             <h2 className={styles.title}>Comments</h2>
             <div className={styles.commentsContainer}>
-                {array.filter((item) => item.postId === postId).map((i) => {
+                {filteredComments.filter(item => item.parentId === null).map((i) => {
                     return (
                         <CommentItem
                             comment={i.message}
                             author={i.author}
-                            time={i.time}
+                            time={new Date(i.time).toLocaleString()}
                             postId={i.postId}
                             key={i.id}
                             replies={getReplies(i.id)}
@@ -111,8 +118,11 @@ const CommentBox = ({postId}: { postId: string }) => {
                             activeComment={activeComment}
                             setActiveComment={setActiveComment}
                             updateComment={updateComment}
-                            isEditable={i.userId===currentUserId && currentUserId !== 'Anonymous'}
-                            isDeletable={i.userId===currentUserId && currentUserId !== 'Anonymous'}
+                            isEditable={i.userId === currentUserId && currentUserId !== 'Anonymous'}
+                            isDeletable={i.userId === currentUserId && currentUserId !== 'Anonymous'}
+                            currentUserId={currentUserId}
+                            handleSubmit={handleSubmit}
+                            parentId={i.parentId}
                         />
                     )
                 })}
