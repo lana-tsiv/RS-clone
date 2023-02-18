@@ -90,6 +90,10 @@ const CommentBox = ({postId, onOpen}: { postId: string, onOpen: any }) => {
     const intl = useIntl();
     const submitLabel = intl.formatMessage({id: 'commentBox.button', defaultMessage: 'Post'});
 
+    useEffect(() => {
+        onOpen(filteredComments.length)
+    }, [filteredComments])
+
     return (
         <Fragment key={postId}>
             <CommentForm

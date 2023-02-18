@@ -11,22 +11,23 @@ interface IPostActionPanel {
 const Action = ({ text, icon: Icon, postId}: { text: React.ReactNode, icon: any, postId: string}) => {
 
     const [uploadComment, setUploadComment] = useState(false);
+    const [commentsCount, setCommentsCount] = useState(0);
+
     const clickHandle = () => {
         setUploadComment(!uploadComment);
     }
 
     return (
     <div className={style.wrap}>
-        <div className={style.actionPanelContainer}>
+        <div className={style.actionPanelContainer} onClick={clickHandle}>
           <div
-              onClick={clickHandle}
               className={style.commentsIcon}
           >
               <Icon />
           </div>
-          <div className={style.commentsCount}>{text}</div>
+          <div className={style.commentsCount}>{text} {commentsCount}</div>
         </div>
-        <div className={uploadComment ? style.open : style.close}><CommentBox postId={postId}/></div>
+        <div className={uploadComment ? style.open : style.close}><CommentBox postId={postId} onOpen={setCommentsCount}/></div>
     </div>
   );
 };
