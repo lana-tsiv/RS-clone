@@ -1,4 +1,5 @@
 .commentWrap {
+  width: 100%;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -22,7 +23,9 @@
 }
 
 .infoContainer {
+  width: 100%;
   display: flex;
+  flex: 1 1;
   flex-direction: column;
   gap: 4px;
 }

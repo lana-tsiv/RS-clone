@@ -91,7 +91,6 @@ const Feed = (props: IFeed) => {
       </div>
       {list.map((post: any, index: number) => {
         const postFields = post.data();
-
         return <PostCard
           key={`post-${post.id}-${index}`}
           fields={postFields}

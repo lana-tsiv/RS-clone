@@ -24,6 +24,7 @@ const CommentBox = ({postId, onOpen}: { postId: string, onOpen: any }) => {
     const handleSubmit = (comment: string, postId: string, parentId: string | null = null) => {
         const now = new Date();
         const timePosted = now.getTime();
+        console.log(comment, postId, parentId)
         const docRef = addDoc(collection(db, "comments"), {
             author: user,
             message: comment,
