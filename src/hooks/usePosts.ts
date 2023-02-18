@@ -2,9 +2,10 @@ import { useMutation, useQuery } from '@/hooks/reactQuery';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { CREATE_POST, POSTS, VOTE_POST } from '@/constants/queryKeys';
-import { createPost, getAllPosts, updatePost } from '@/api/posts';
+import { createPost, getAllPosts, getPost, updatePost } from '@/api/posts';
 
 import { IPost } from '@/types/common';
+import { SINGLE_POST } from '../constants/queryKeys';
 
 export const usePosts = (params?: any) => {
 	const queryClient = useQueryClient();
@@ -15,7 +16,8 @@ export const usePosts = (params?: any) => {
 		limitSize,
 		sortFieldName,
 		sortDirection,
-		searchValue
+		searchValue,
+		postId
 	} = params || {};
 
     const {
@@ -45,6 +47,21 @@ export const usePosts = (params?: any) => {
 	});
 
 	const {
+		data: singlePost
+	} = useQuery({
+		queryKey: [
+			SINGLE_POST,
+			postId
+		],
+		queryFn: () => getPost(postId),
+		refetchOnWindowFocus: false,
+		enabled: [!!postId],
+		onSuccess: () => {
+			console.log('SINGLE POST FETCHED')
+		}
+	});
+
+	const {
 		mutate: handleCreatePost,
 		isLoading: isLoadingCreatePost,
 	} = useMutation<IPost>({
@@ -57,6 +74,7 @@ export const usePosts = (params?: any) => {
 
 	return { 
 		postsData,
+		singlePost: singlePost || null,
 		handleCreatePost,
 		isLoadingPosts: isLoadingPosts || isFetchingPosts,
 		isLoadingCreatePost,
@@ -75,4 +93,23 @@ export const useMangePosts = () => {
 	});
 
 	return { handleVotePost }
+}
+
+export const useSinglePost = ({postId}: any) => {
+	const {
+		data: singlePost
+	} = useQuery({
+		queryKey: [
+			SINGLE_POST,
+			postId
+		],
+		queryFn: () => getPost(postId),
+		refetchOnWindowFocus: false,
+		enabled: [!!postId],
+		onSuccess: () => {
+			console.log('SINGLE POST FETCHED')
+		}
+	});
+
+	return { singlePost }
 }
