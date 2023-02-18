@@ -12,13 +12,13 @@ interface CommentFormProps {
 }
 
 const CommentForm = ({
-                         submitLabel,
-                         postId,
-                         handleSubmit,
-                         hasCancelButton = false,
-                         handleCancel,
-                         initialText = ''
-                     }: CommentFormProps) => {
+    submitLabel,
+    postId,
+    handleSubmit,
+    hasCancelButton = false,
+    handleCancel,
+    initialText = ''
+}: CommentFormProps) => {
 
     const [text, setText] = useState(initialText);
 
@@ -44,21 +44,24 @@ const CommentForm = ({
                 onChange={(event) => setText(event.target.value)}
                 placeholder={placeholder}
             />
-            <button
-                className={styles.button}
-                disabled={isDisabled}
-            >
-                {submitLabel}
-            </button>
-            {hasCancelButton && (
+            <div className={styles.btnWrapper}>
+
                 <button
-                    type="button"
-                    className={styles.cancelBtn}
-                    onClick={handleCancel}
+                    className={styles.button}
+                    disabled={isDisabled}
                 >
-                    Cancel
+                    {submitLabel}
                 </button>
-            )}
+                {hasCancelButton && (
+                    <button
+                        type="button"
+                        className={styles.cancelBtn}
+                        onClick={handleCancel}
+                    >
+                        Cancel
+                    </button>
+                )}
+            </div>
         </form>
     );
 };

@@ -54,7 +54,6 @@ const Feed = (props: IFeed) => {
 
   const selectHandler = (e: any) => {
     const [sortFieldName, sortDirection] = e.target.value.split('-');
-    console.log(sortFieldName, sortDirection)
     sortHandler({sortFieldName, sortDirection})
   }
 
@@ -91,13 +90,12 @@ const Feed = (props: IFeed) => {
       </div>
       {list.map((post: any, index: number) => {
         const postFields = post.data();
-
         return <PostCard
           key={`post-${post.id}-${index}`}
           fields={postFields}
           postId={post.id}
           refView={list?.length - 1!= index ? null : ref}
-          commentsCount={!!postFields?.commentsCount ? postFields?.commentsCount : 0}
+          commentsCount={!!postFields?.commentsCount ? postFields?.commentsCount : ''}
         />
       }
     )}

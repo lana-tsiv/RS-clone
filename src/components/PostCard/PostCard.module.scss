@@ -34,6 +34,17 @@
 			font-weight: normal;
 			width: 100%;
 			display: -webkit-box;
+			
+			transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+			cursor: pointer;
+
+			&:hover {
+				color: rgba(8, 177, 243, 0.4);
+				
+			}
+		}
+
+		.titleClamp {
 			overflow: hidden;
 			-webkit-line-clamp: 2;
 			-webkit-box-orient: vertical;
@@ -43,13 +54,18 @@
 	.text {
 		font-weight: 300;
 		margin-top: -10px;
+	}
 
-		p{
-			display: -webkit-box;
-			overflow: hidden;
-			-webkit-line-clamp: 4;
-			-webkit-box-orient: vertical;
-		}
+	.textClamp {
+		display: -webkit-box;
+		overflow: hidden;
+		-webkit-line-clamp: 4;
+		-webkit-box-orient: vertical;
+	}
+
+	.singlePostText {
+		font-weight: 300;
+		margin-top: -10px;
 	}
 
 	.content {

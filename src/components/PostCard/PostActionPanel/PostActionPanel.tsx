@@ -1,37 +1,67 @@
-import React, {useState} from "react";
+import React, { useState, ReactNode } from "react";
 import style from "./PostActionPanel.module.scss";
 import CommentBox from "@/components/PostCard/CommentBox";
+import { auth } from '@/firebaseClient/clientApp';
 
-interface IPostActionPanel {
-  actionList: { text: React.ReactNode; icon: any }[];
-  id?: string;
-  postId: string
+interface IAction {
+  text: ReactNode;
+  icon: any;
+  postId: string;
+  isCommentShown?: boolean;
 }
 
-const Action = ({ text, icon: Icon, postId}: { text: React.ReactNode, icon: any, postId: string}) => {
+const Action = ({ 
+  text,
+  icon: Icon,
+  postId,
+  isCommentShown
+}: IAction) => {
+  const [uploadComment, setUploadComment] = useState(false);
+  const [commentsCount, setCommentsCount] = useState(0);
 
-    const [uploadComment, setUploadComment] = useState(false);
-    const clickHandle = () => {
-        setUploadComment(!uploadComment);
-    }
+  const clickHandle = () => {
+    setUploadComment(!uploadComment);
+  };
 
-    return (
+  return (
     <div className={style.wrap}>
-        <div className={style.actionPanelContainer}>
-          <div
-              onClick={clickHandle}
-              className={style.commentsIcon}
-          >
-              <Icon />
-          </div>
-          <div className={style.commentsCount}>{text}</div>
+      <div
+        className={style.actionPanelContainer}
+        onClick={clickHandle}
+      >
+        <div className={style.commentsIcon}>
+          <Icon />
         </div>
-        <div className={uploadComment ? style.open : style.close}><CommentBox postId={postId}/></div>
+        <div className={style.commentsCount}>
+          {text} {commentsCount}
+        </div>
+      </div>
+      {isCommentShown && auth?.currentUser &&
+        <div className={uploadComment ? style.open : style.close}>
+          <CommentBox
+            postId={postId}
+            onOpen={setCommentsCount}
+          />
+        </div>
+      }
     </div>
   );
 };
 
-const PostActionPanel = ({ actionList, id, postId }: IPostActionPanel) => {
+interface IPostActionPanel {
+  actionList: { text: ReactNode; icon: any }[];
+  id?: string;
+  postId: string;
+  isCommentShown?: boolean;
+}
+
+
+const PostActionPanel = ({ 
+  actionList,
+  id,
+  postId,
+  isCommentShown,
+}: IPostActionPanel) => {
   return (
     <div className={style.postActionPanelContainer}>
       {actionList.map((action, index) => (
@@ -39,7 +69,9 @@ const PostActionPanel = ({ actionList, id, postId }: IPostActionPanel) => {
           postId={postId}
           key={`action-${index}-${id}`}
           text={action.text}
-          icon={action.icon} />
+          icon={action.icon}
+          isCommentShown={isCommentShown}
+        />
       ))}
     </div>
   );

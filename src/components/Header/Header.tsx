@@ -17,6 +17,7 @@ import { main } from "@/store/selectors";
 import Button from "../common/Button";
 import SignInForm from "../AuthForm/SignInForm";
 import CreateCommunityModal from "./Communities/CreateCommunityModal";
+import { auth } from '@/firebaseClient/clientApp';
 
 const Header: React.FC = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -31,8 +32,6 @@ const Header: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const isAuth = !!userDisplayName;
-
-  const auth = getAuth();
 
   const handleSearch = (searchValue: string) =>
     dispatch(setSearchValue({ searchValue }));
@@ -60,7 +59,6 @@ const Header: React.FC = () => {
   };
 
   const searchHandler = (e: any) => {
-    console.log("CALl");
     handleSearch(e.target.value);
   };
 

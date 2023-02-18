@@ -6,6 +6,10 @@ import {
 	limit,
 	updateDoc,
 	where,
+	doc,
+	setDoc,
+	deleteDoc,
+	getDoc,
 } from 'firebase/firestore';
 
 import { postsCollection } from '@/firebaseClient/collections';
@@ -21,7 +25,6 @@ export const getAllPosts = ({
 	searchValue,
 	limitSize
 } : GetPostApi) => {
-	console.log( order, direction, limitSize)
 	const allPosts = searchValue && searchValue!=='' ? 
 	 query(
 			postsCollection,
@@ -38,18 +41,21 @@ export const getAllPosts = ({
 	return getDocs(allPosts);
 }
 
-export const createPost = (props: IPost) => {
-	return addDoc(
-		postsCollection,
-		{...props}
-	)
+export const getPost = (id: string) => {
+	if(!id) return null;
+	const docRef = doc(postsCollection, id);
+	getDoc(docRef)
+	return getDoc(docRef);
 }
 
-export const deletePost = (props: IPost) => {
-	return addDoc(
-		postsCollection,
-		{...props}
-	)
+export const createPost = (props: IPost) => {
+	const userRef = doc(postsCollection)
+	return setDoc(userRef, {...props, postId: userRef.id})
+}
+
+export const deletePost = (id: string) => {
+	const docRef = doc(postsCollection, id);
+	return deleteDoc(docRef)
 }
 
 export const updatePost = (props: Partial<IPost>) => {
