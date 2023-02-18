@@ -31,7 +31,8 @@
     }
   }
 
-  &_modal {
+  &_modal,
+  &_community {
     width: 100%;
     max-width: 400px;
     background: #fff;
@@ -62,6 +63,18 @@
       position: absolute;
       right: 16px;
       top: 16px;
+    }
+  }
+
+  &_community {
+    display: flex !important;
+    align-items: center !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    position: relative !important;
+
+    button {
+      position: absolute;
     }
   }
 }
