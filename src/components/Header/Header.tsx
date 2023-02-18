@@ -16,10 +16,12 @@ import {
 import { main } from "@/store/selectors";
 import Button from "../common/Button";
 import SignInForm from "../AuthForm/SignInForm";
+import CreateCommunityModal from "./Communities/CreateCommunityModal";
 import { auth } from '@/firebaseClient/clientApp';
 
 const Header: React.FC = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [isCommunityModalOpen, setCommunityModa] = useState(false);
   const [isSignIn, setIsSignIn] = useState(true);
 
   const handleSignIn = () => setIsSignIn(true);
@@ -74,12 +76,36 @@ const Header: React.FC = () => {
       <Search onSearch={searchHandler} />
       <div className={style.header_buttons__wrapper}>
         <div className={style.userDisplayName}>{userDisplayName}</div>
+        {/* {isAuth && ( */}
+        <Button
+          clickHandler={() => setCommunityModa(!isCommunityModalOpen)}
+          text="create community"
+          isSecondary
+        />
+        {/* )} */}
         <Button
           clickHandler={!isAuth ? openModal : handleSendSignUp}
           text={isAuth ? "log out" : "log in"}
           isSecondary
         />
       </div>
+
+      <ReactModal
+        className={style.header_community}
+        isOpen={isCommunityModalOpen}
+        onRequestClose={() => setCommunityModa(!isCommunityModalOpen)}
+        ariaHideApp={false}
+      >
+        <div className={style.header_community__wrapper}>
+          <Button
+            clickHandler={() => setCommunityModa(!isCommunityModalOpen)}
+            text="Close"
+            isSecondary
+          />
+        </div>
+        <CreateCommunityModal />
+      </ReactModal>
+
       <ReactModal
         className={style.header_modal}
         isOpen={modalIsOpen}
