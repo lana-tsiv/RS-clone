@@ -7,7 +7,7 @@ import {auth, db} from "@/firebaseClient/clientApp";
 import CommentItem from "@/components/PostCard/CommentBox/CommentItem";
 
 
-const CommentBox = ({postId}: { postId: string }) => {
+const CommentBox = ({postId, onOpen}: { postId: string, onOpen: any }) => {
     const currentUserId = auth.currentUser?.uid ?? "Anonymous";
     const user = currentUserId === 'Anonymous' ? 'Anonymous' : auth.currentUser?.displayName;
 
