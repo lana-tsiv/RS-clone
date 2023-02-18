@@ -57,7 +57,6 @@ const Header: React.FC = () => {
   };
 
   const searchHandler = (e: any) => {
-    console.log("CALl");
     handleSearch(e.target.value);
   };
 

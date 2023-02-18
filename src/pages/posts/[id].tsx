@@ -12,7 +12,7 @@ const UserPage = () => {
 
   const parsePost = (post: any) => post ? post?.data() : null
   const post = parsePost(singlePost)
-  {console.log(post)}
+  
   return ( post &&
     <div className={style.postWrapper}>
       <PostCard

@@ -54,7 +54,6 @@ const Feed = (props: IFeed) => {
 
   const selectHandler = (e: any) => {
     const [sortFieldName, sortDirection] = e.target.value.split('-');
-    console.log(sortFieldName, sortDirection)
     sortHandler({sortFieldName, sortDirection})
   }
 

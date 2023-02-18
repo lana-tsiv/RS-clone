@@ -25,7 +25,6 @@ export const getAllPosts = ({
 	searchValue,
 	limitSize
 } : GetPostApi) => {
-	console.log( order, direction, limitSize)
 	const allPosts = searchValue && searchValue!=='' ? 
 	 query(
 			postsCollection,

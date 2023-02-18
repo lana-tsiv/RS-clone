@@ -23,8 +23,6 @@ const Action = ({
     setUploadComment(!uploadComment);
   };
 
-  console.log(auth)
-
   return (
     <div className={style.wrap}>
       <div
