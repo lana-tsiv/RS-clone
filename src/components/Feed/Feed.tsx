@@ -97,7 +97,7 @@ const Feed = (props: IFeed) => {
           fields={postFields}
           postId={post.id}
           refView={list?.length - 1!= index ? null : ref}
-          commentsCount={!!postFields?.commentsCount ? postFields?.commentsCount : 0}
+          commentsCount={!!postFields?.commentsCount ? postFields?.commentsCount : ''}
         />
       }
     )}
