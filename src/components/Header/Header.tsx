@@ -18,6 +18,7 @@ import Button from "../common/Button";
 import SignInForm from "../AuthForm/SignInForm";
 import CreateCommunityModal from "./Communities/CreateCommunityModal";
 import { auth } from '@/firebaseClient/clientApp';
+import {useRouter} from "next/router";
 
 const Header: React.FC = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -66,6 +67,7 @@ const Header: React.FC = () => {
 
   const closeModal = () => setIsOpen(false);
 
+  const router = useRouter();
   return (
     <header className={style.header}>
       <div className={style.header_logo__wrapper}>
@@ -83,6 +85,12 @@ const Header: React.FC = () => {
           isSecondary
         />
         {/* )} */}
+          {isAuth && (<Button
+                  text={'Manage account'}
+                  clickHandler={() => router.push('/manage-account')}
+                  isSecondary={true}
+              />
+          )}
         <Button
           clickHandler={!isAuth ? openModal : handleSendSignUp}
           text={isAuth ? "log out" : "log in"}

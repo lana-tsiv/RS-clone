@@ -1,0 +1,139 @@
+.wrapper {
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+
+  @media screen and (max-width: 680px){
+    flex-direction: column;
+    gap: 2rem;
+
+    .leftSection, .rightSection {
+      width: 100%;
+    }
+  }
+}
+
+.leftSection {
+  margin-right: 1rem;
+  padding: 10px 16px;
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+
+  .title {
+    color: #414141;
+    width: 100%;
+    margin-bottom: 6px;
+    font-weight: bolder;
+    border-bottom: 1px solid #d2d2d2;
+    padding-bottom: 10px;
+  }
+}
+
+.sidebarItemActive, .sidebarItemDeActive {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.01);
+    transition: all 0.1s ease-in-out;
+  }
+}
+
+.icon {
+  width: 16px;
+  object-fit: cover;
+}
+
+.sidebarItemActive {
+  color: #1d1d1d;
+
+  .icon {
+    opacity: 1;
+  }
+}
+
+.sidebarItemDeActive {
+  color: #787c7e;
+
+  .icon {
+    opacity: 0.2;
+  }
+}
+
+.rightSection {
+  border: 1px solid #d2d2d2;
+  width: 70%;
+  border-radius: 12px;
+  overflow: hidden;
+
+  .title {
+    color: #1d1d1d;
+    padding: 10px 16px;
+    background-color: rgba(245, 245, 245, 0.5);
+  }
+}
+
+.BasicInfoWrap {
+  padding: 24px 16px;
+  color: #1d1d1d;
+
+  .name {
+    text-transform: capitalize;
+    font-weight: bolder;
+  }
+
+  .text {
+    color: #787c7e;
+    font-size: 0.9rem;
+    margin-top: 8px;
+  }
+}
+
+.nameInputWrap {
+  margin-top: 4rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.form {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.textarea {
+  width: 50%;
+  height: 38px;
+  border: 1px solid #e0e0e0;
+  padding: 10px;
+  resize: none;
+  outline: none;
+}
+
+.button {
+  background: #66bdf4;
+  color: #fafdff;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 0 5px 20px rgba(102, 189, 244, 0.4);
+  }
+
+  &:disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+}
+
