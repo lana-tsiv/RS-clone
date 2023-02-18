@@ -16,6 +16,7 @@ import { main } from "@/store/selectors";
 import { setUserDisplayName, setUserEmail } from "@/slices/main";
 import ErrorLabel from "../../common/ErrorLabel/ErrorLabel";
 import GoogleButton from "@/components/Header/GoogleButton";
+import { auth } from '@/firebaseClient/clientApp';
 
 interface ISignUpForm {
   toggleForm: () => void;
@@ -49,7 +50,6 @@ const SignUpForm = ({ closeModal, toggleForm }: ISignUpForm) => {
     dispatch(setUserEmail({ userEmail }));
 
   const handleSendSignUp = () => {
-    const auth = getAuth();
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         updateProfile(userCredential.user, {

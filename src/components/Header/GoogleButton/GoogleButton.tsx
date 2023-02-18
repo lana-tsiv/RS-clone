@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import translate from "@/i18n/translate";
 
 import styles from "./GoogleButton.module.scss";
+import { auth } from '@/firebaseClient/clientApp';
 
 interface IGoogleButton {
   closeModal: () => void;
@@ -12,7 +13,6 @@ const GoogleButton = ({ closeModal }: IGoogleButton) => {
   const [error, setError] = useState(null);
 
   const handleGoogleLogin = async () => {
-    const auth = getAuth();
     const provider = new GoogleAuthProvider();
 
     signInWithPopup(auth, provider)

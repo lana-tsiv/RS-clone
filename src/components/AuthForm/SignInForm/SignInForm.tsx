@@ -11,6 +11,7 @@ import { setUserDisplayName, setUserEmail } from "@/slices/main";
 import Button from "@/components/common/Button";
 import ErrorLabel from "@/components/common/ErrorLabel";
 import GoogleButton from "@/components/Header/GoogleButton";
+import { auth } from '@/firebaseClient/clientApp';
 
 interface ISignInForm {
   toggleForm: () => void;
@@ -49,7 +50,6 @@ const SignInForm = ({ closeModal, toggleForm }: ISignInForm) => {
     dispatch(setUserEmail({ userEmail }));
 
   const handleSendSignIn = () => {
-    const auth = getAuth();
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         userDisplayNameHandler(userCredential.user.displayName);

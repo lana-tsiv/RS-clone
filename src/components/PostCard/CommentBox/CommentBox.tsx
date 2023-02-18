@@ -3,13 +3,11 @@ import styles from './CommentBox.module.scss'
 import CommentForm from "@/components/PostCard/CommentBox/CommentForm";
 import {useIntl} from "react-intl";
 import {collection, getDocs, doc, deleteDoc, addDoc, updateDoc} from "firebase/firestore";
-import {db} from "@/firebaseClient/clientApp";
+import {auth, db} from "@/firebaseClient/clientApp";
 import CommentItem from "@/components/PostCard/CommentBox/CommentItem";
-import {getAuth} from "firebase/auth";
 
 
 const CommentBox = ({postId}: { postId: string }) => {
-    const auth = getAuth();
     const currentUserId = auth.currentUser?.uid ?? "Anonymous";
     const user = currentUserId === 'Anonymous' ? 'Anonymous' : auth.currentUser?.displayName;
 
