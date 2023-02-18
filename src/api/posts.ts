@@ -2,7 +2,6 @@ import {
 	query,
 	getDocs,
 	orderBy,
-	addDoc,
 	limit,
 	updateDoc,
 	where,

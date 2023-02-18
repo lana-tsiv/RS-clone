@@ -49,6 +49,7 @@ const PostForm = (props: IPostForm) => {
       userId: "7ty4kpyNv35QonTVsZMA",
       title,
       text,
+      voters:{},
       votesUp: 0,
       votesDown: 0,
       timestamp: Date.now(),

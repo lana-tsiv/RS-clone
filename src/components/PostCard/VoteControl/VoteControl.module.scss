@@ -24,6 +24,16 @@
 	}
 }
 
+.voteUpIcon.active {
+	border-bottom: 10px solid #0091ff;
+	transition: all 0.1s linear;
+}
+
+.voteDownIcon.active {
+	border-top: 10px solid #0091ff;
+	transition: all 0.1s linear;
+}
+
 .voteDownIcon {
 	cursor: pointer;
 	width: 0;
