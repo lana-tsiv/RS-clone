@@ -7,12 +7,13 @@ import {
     EmailAuthProvider,
     onAuthStateChanged,
     reauthenticateWithCredential,
-    updateEmail,
+    updateEmail, updatePassword,
     updateProfile,
 } from "firebase/auth";
 import {auth} from "@/firebaseClient/clientApp";
 import FormButton from "@/components/common/FormButton";
 import FormInput from "@/components/common/FormInput";
+import HideIcon from '@/../public/icons/eyehide.svg';
 
 const ManageAccount = () => {
     const [currentTab, setCurrentTab] = useState(1)
@@ -113,7 +114,7 @@ const BasicInfo = () => {
                         placeholder={currentName!}
                         onChange={(event: React.ChangeEvent<HTMLInputElement>) => setTextName(event.target.value)}
                     />
-                    <FormButton text={'Update Name'} disabled={textName.length < 1} />
+                    <FormButton text={'Update Name'} disabled={textName.length < 1}/>
                 </form>
             </div>
         </div>
@@ -124,9 +125,16 @@ const Password = () => {
     const [currentEmail, setCurrentEmail] = useState('');
     const [email, setEmail] = useState('');
 
+    const [newPassword, setNewPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+
+    const handleShowPasswordChange = () => {
+        setShowPassword(!showPassword);
+    };
+
     const promptForCredentials = async () => {
         const email = prompt('Please enter your current email:');
-        const password = prompt('Please enter your password:');
+        const password = prompt('Please enter your current password:');
         if (!email || !password) {
             throw new Error('Missing credentials');
         }
@@ -156,6 +164,24 @@ const Password = () => {
             });
     };
 
+    const onSubmitPassword = (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        const user = auth.currentUser;
+        promptForCredentials()
+            .then((credential) => {
+                return reauthenticateWithCredential(user!, credential);
+            })
+            .then(() => {
+                return updatePassword(user!, newPassword);
+            })
+            .then(() => {
+                setNewPassword('');
+            })
+            .catch((err) => {
+                console.log(err.message);
+            })
+    }
+
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
             if (user) {
@@ -180,8 +206,23 @@ const Password = () => {
                         placeholder={currentEmail!}
                         onChange={(event: React.ChangeEvent<HTMLInputElement>) => setEmail(event.target.value)}
                     />
-                    <FormButton text={'Update Email'} disabled={email.length < 1} />
+                    <FormButton text={'Update Email'} disabled={email.length < 1}/>
                 </form>
+                <form className={styles.form} onSubmit={onSubmitPassword}>
+                    <label className={styles.label}>Enter new password</label>
+                    <FormInput
+                        type={showPassword ? 'text' : 'password'}
+                        value={newPassword}
+                        placeholder={'Password'}
+                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => setNewPassword(event.target.value)}
+                    />
+                    <FormButton text={'Update Password'} disabled={newPassword.length < 6}/>
+                </form>
+                <div className={showPassword ? styles.passwordActive : styles.passwordDeActive}
+                     onClick={handleShowPasswordChange}>
+                    <img className={styles.hideIcon} src={HideIcon.src} alt={'open-hide'}/>
+                    <p className={styles.textIcon}>Show password</p>
+                </div>
             </div>
         </div>
     )

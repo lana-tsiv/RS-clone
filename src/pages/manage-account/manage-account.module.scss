@@ -105,6 +105,7 @@
 .form {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   gap: 1rem;
   margin-top: 2rem;
   align-items: center;
@@ -112,5 +113,48 @@
   .label {
     color: #1d1d1d;
     min-width: 160px;
+  }
+
+  @media screen and (max-width: 900px){
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+.passwordActive, .passwordDeActive {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 6px;
+    cursor: pointer;
+    margin: 10px 0 0 180px;
+
+  .hideIcon {
+    width: 18px;
+    object-fit: cover;
+  }
+
+  .textIcon {
+    font-size: 0.9rem;
+  }
+}
+
+.passwordActive {
+  .textIcon {
+    color: #1d1d1d;
+  }
+
+  .hideIcon {
+    opacity: 0.8;
+  }
+}
+
+.passwordDeActive {
+  .hideIcon {
+    opacity: 0.2;
+  }
+
+  .textIcon {
+    color: #787c7e;
   }
 }
