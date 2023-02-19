@@ -5,7 +5,7 @@
   flex-wrap: wrap;
   justify-content: space-around;
 
-  @media screen and (max-width: 680px){
+  @media screen and (max-width: 680px) {
     flex-direction: column;
     gap: 2rem;
 
@@ -33,40 +33,6 @@
   }
 }
 
-.sidebarItemActive, .sidebarItemDeActive {
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  align-items: center;
-  cursor: pointer;
-
-  &:hover {
-    transform: scale(1.01);
-    transition: all 0.1s ease-in-out;
-  }
-}
-
-.icon {
-  width: 16px;
-  object-fit: cover;
-}
-
-.sidebarItemActive {
-  color: #1d1d1d;
-
-  .icon {
-    opacity: 1;
-  }
-}
-
-.sidebarItemDeActive {
-  color: #787c7e;
-
-  .icon {
-    opacity: 0.2;
-  }
-}
-
 .rightSection {
   border: 1px solid #d2d2d2;
   width: 70%;
@@ -80,7 +46,7 @@
   }
 }
 
-.BasicInfoWrap, .PasswordWrap {
+.BasicInfoWrap, .PasswordWrap, .DeleteWrap {
   padding: 24px 16px;
   color: #1d1d1d;
 
@@ -115,19 +81,19 @@
     min-width: 160px;
   }
 
-  @media screen and (max-width: 900px){
+  @media screen and (max-width: 1060px) {
     flex-direction: column;
     justify-content: center;
   }
 }
 
 .passwordActive, .passwordDeActive {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 6px;
-    cursor: pointer;
-    margin: 10px 0 0 180px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 6px;
+  cursor: pointer;
+  margin: 10px 0 0 180px;
 
   .hideIcon {
     width: 18px;
@@ -136,6 +102,11 @@
 
   .textIcon {
     font-size: 0.9rem;
+  }
+
+  @media screen and (max-width: 1060px) {
+    justify-content: center;
+    margin: 10px 0;
   }
 }
 
@@ -156,5 +127,17 @@
 
   .textIcon {
     color: #787c7e;
+  }
+}
+
+.DeleteWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+
+  .info {
+    width: 80%;
+    line-height: 1.3rem;
   }
 }

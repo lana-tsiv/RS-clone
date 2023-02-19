@@ -4,6 +4,7 @@ import User from '@/../public/icons/user.svg';
 import Security from '@/../public/icons/security.svg';
 import Delete from '@/../public/icons/delete.svg';
 import {
+    deleteUser,
     EmailAuthProvider,
     onAuthStateChanged,
     reauthenticateWithCredential,
@@ -14,6 +15,17 @@ import {auth} from "@/firebaseClient/clientApp";
 import FormButton from "@/components/common/FormButton";
 import FormInput from "@/components/common/FormInput";
 import HideIcon from '@/../public/icons/eyehide.svg';
+import Button from "@/components/common/Button";
+import SideBarItem from "@/components/common/SideBarItem";
+
+const promptForCredentials = async () => {
+    const email = prompt('Please enter your current email:');
+    const password = prompt('Please enter your current password:');
+    if (!email || !password) {
+        throw new Error('Missing credentials');
+    }
+    return EmailAuthProvider.credential(email, password);
+};
 
 const ManageAccount = () => {
     const [currentTab, setCurrentTab] = useState(1)
@@ -34,34 +46,27 @@ const ManageAccount = () => {
         <div className={styles.wrapper}>
             <div className={styles.leftSection}>
                 <p className={styles.title}>Account Settings</p>
-                <div
-                    className={styles.sidebarItemWrap}
+                <SideBarItem
+                    isActive={currentTab === 1}
+                    icon={User.src}
+                    alt={'user'}
+                    text={'Basic Information'}
                     onClick={() => handleClickBasicInfo(1)}
-                >
-                    <div className={currentTab === 1 ? styles.sidebarItemActive : styles.sidebarItemDeActive}>
-                        <img className={styles.icon} src={User.src} alt='user'/>
-                        <p>Basic Information</p>
-                    </div>
-                </div>
-                <div
-                    className={styles.sidebarItemWrap}
+                />
+                <SideBarItem
+                    isActive={currentTab === 2}
+                    icon={Security.src}
+                    alt={'security'}
                     onClick={() => handleClickPassword(2)}
-                >
-                    <div className={currentTab === 2 ? styles.sidebarItemActive : styles.sidebarItemDeActive}>
-                        <img className={styles.icon} src={Security.src} alt='security'/>
-                        <p>Password &
-                            Security</p>
-                    </div>
-                </div>
-                <div
-                    className={styles.sidebarItemWrap}
+                    text={'Password & Security'}
+                />
+                <SideBarItem
+                    isActive={currentTab === 3}
+                    icon={Delete.src}
+                    alt={'delete'}
                     onClick={() => handleClickDelete(3)}
-                >
-                    <div className={currentTab === 3 ? styles.sidebarItemActive : styles.sidebarItemDeActive}>
-                        <img className={styles.icon} src={Delete.src} alt='delete'/>
-                        <p>Delete account</p>
-                    </div>
-                </div>
+                    text={'Delete account'}
+                />
             </div>
             <div className={styles.rightSection}>
                 {currentTab === 1 && <BasicInfo/>}
@@ -83,7 +88,6 @@ const BasicInfo = () => {
         }).then(() => {
             setCurrentName(textName!);
             setTextName('');
-            console.log('was updated');
         }).catch((err) => {
             console.log(err.message)
         })
@@ -130,15 +134,6 @@ const Password = () => {
 
     const handleShowPasswordChange = () => {
         setShowPassword(!showPassword);
-    };
-
-    const promptForCredentials = async () => {
-        const email = prompt('Please enter your current email:');
-        const password = prompt('Please enter your current password:');
-        if (!email || !password) {
-            throw new Error('Missing credentials');
-        }
-        return EmailAuthProvider.credential(email, password);
     };
 
     const onSubmitEmail = (event: FormEvent<HTMLFormElement>) => {
@@ -229,9 +224,28 @@ const Password = () => {
 }
 
 const DeleteAccount = () => {
+    const onSubmit = () => {
+        const user = auth.currentUser;
+        promptForCredentials()
+            .then((credential) => {
+                return reauthenticateWithCredential(user!, credential);
+            })
+            .then(() => {
+                return deleteUser(user!);
+            })
+            .catch((err) => {
+                console.log(err.message);
+            });
+    };
+
     return (
         <div>
             <p className={styles.title}>Delete your account</p>
+            <div className={styles.DeleteWrap}>
+                <p className={styles.info}>When you delete your account, you lose access to your account services, and
+                    we permanently delete your personal data</p>
+                <Button text={'Delete'} clickHandler={onSubmit}/>
+            </div>
         </div>
     )
 }
