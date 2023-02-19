@@ -11,6 +11,8 @@ import {
     updateProfile,
 } from "firebase/auth";
 import {auth} from "@/firebaseClient/clientApp";
+import FormButton from "@/components/common/FormButton";
+import FormInput from "@/components/common/FormInput";
 
 const ManageAccount = () => {
     const [currentTab, setCurrentTab] = useState(1)
@@ -105,20 +107,13 @@ const BasicInfo = () => {
                 <p className={styles.name}>{currentName}</p>
                 <p className={styles.text}>This will be displayed on your profile.</p>
                 <form className={styles.form} onSubmit={onSubmit}>
-                    <textarea
-                        className={styles.textarea}
+                    <FormInput
+                        type={'text'}
                         value={textName}
-                        onChange={(event) => setTextName(event.target.value)}
                         placeholder={currentName!}
+                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => setTextName(event.target.value)}
                     />
-                    <div className={styles.btnWrapper}>
-                        <button
-                            className={styles.button}
-                            disabled={textName.length < 1}
-                        >
-                            Update Name
-                        </button>
-                    </div>
+                    <FormButton text={'Update Name'} disabled={textName.length < 1} />
                 </form>
             </div>
         </div>
@@ -179,21 +174,13 @@ const Password = () => {
             <div className={styles.PasswordWrap}>
                 <form className={styles.form} onSubmit={onSubmitEmail}>
                     <label className={styles.label}>Enter new email</label>
-                    <input
-                        className={styles.textarea}
-                        type="email"
+                    <FormInput
+                        type={'email'}
                         value={email}
-                        onChange={(event) => setEmail(event.target.value)}
                         placeholder={currentEmail!}
+                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => setEmail(event.target.value)}
                     />
-                    <div className={styles.btnWrapper}>
-                        <button
-                            className={styles.button}
-                            disabled={email.length < 1}
-                        >
-                            Update Email
-                        </button>
-                    </div>
+                    <FormButton text={'Update Email'} disabled={email.length < 1} />
                 </form>
             </div>
         </div>

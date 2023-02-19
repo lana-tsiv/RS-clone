@@ -114,32 +114,3 @@
     min-width: 160px;
   }
 }
-
-.textarea {
-  width: 50%;
-  height: 38px;
-  border: 1px solid #e0e0e0;
-  padding: 10px;
-  resize: none;
-  outline: none;
-}
-
-.button {
-  background: #66bdf4;
-  color: #fafdff;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  padding: 10px 20px;
-  border: none;
-  cursor: pointer;
-
-  &:hover {
-    box-shadow: 0 5px 20px rgba(102, 189, 244, 0.4);
-  }
-
-  &:disabled {
-    pointer-events: none;
-    opacity: 0.5;
-  }
-}
-
