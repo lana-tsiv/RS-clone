@@ -80,7 +80,7 @@
   }
 }
 
-.BasicInfoWrap {
+.BasicInfoWrap, .PasswordWrap {
   padding: 24px 16px;
   color: #1d1d1d;
 
@@ -107,6 +107,12 @@
   flex-direction: row;
   gap: 1rem;
   margin-top: 2rem;
+  align-items: center;
+
+  .label {
+    color: #1d1d1d;
+    min-width: 160px;
+  }
 }
 
 .textarea {

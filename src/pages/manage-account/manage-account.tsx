@@ -3,7 +3,13 @@ import styles from './manage-account.module.scss';
 import User from '@/../public/icons/user.svg';
 import Security from '@/../public/icons/security.svg';
 import Delete from '@/../public/icons/delete.svg';
-import {onAuthStateChanged, updateProfile} from "firebase/auth";
+import {
+    EmailAuthProvider,
+    onAuthStateChanged,
+    reauthenticateWithCredential,
+    updateEmail,
+    updateProfile,
+} from "firebase/auth";
 import {auth} from "@/firebaseClient/clientApp";
 
 const ManageAccount = () => {
@@ -54,8 +60,6 @@ const ManageAccount = () => {
                     </div>
                 </div>
             </div>
-
-
             <div className={styles.rightSection}>
                 {currentTab === 1 && <BasicInfo/>}
                 {currentTab === 2 && <Password/>}
@@ -66,13 +70,11 @@ const ManageAccount = () => {
 };
 
 const BasicInfo = () => {
-
     const [currentName, setCurrentName] = useState('');
     const [textName, setTextName] = useState('');
 
     const onSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-
         updateProfile(auth.currentUser!, {
             displayName: textName
         }).then(() => {
@@ -96,7 +98,6 @@ const BasicInfo = () => {
         })
     }, [])
 
-
     return (
         <div>
             <p className={styles.title}>Basic Information</p>
@@ -111,7 +112,6 @@ const BasicInfo = () => {
                         placeholder={currentName!}
                     />
                     <div className={styles.btnWrapper}>
-
                         <button
                             className={styles.button}
                             disabled={textName.length < 1}
@@ -126,9 +126,76 @@ const BasicInfo = () => {
 }
 
 const Password = () => {
+    const [currentEmail, setCurrentEmail] = useState('');
+    const [email, setEmail] = useState('');
+
+    const promptForCredentials = async () => {
+        const email = prompt('Please enter your current email:');
+        const password = prompt('Please enter your password:');
+        if (!email || !password) {
+            throw new Error('Missing credentials');
+        }
+        return EmailAuthProvider.credential(email, password);
+    };
+
+    const onSubmitEmail = (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        const user = auth.currentUser;
+        promptForCredentials()
+            .then((credential) => {
+                return reauthenticateWithCredential(user!, credential);
+            })
+            .then(() => {
+                const newEmail = email.trim();
+                if (!newEmail) {
+                    throw new Error('Missing email');
+                }
+                return updateEmail(user!, newEmail);
+            })
+            .then(() => {
+                setCurrentEmail(email);
+                setEmail('');
+            })
+            .catch((err) => {
+                console.log(err.message);
+            });
+    };
+
+    useEffect(() => {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                const currentUserEmail = auth.currentUser?.email;
+                setEmail('')
+                setCurrentEmail(currentUserEmail!)
+            } else {
+                console.log('Not found')
+            }
+        })
+    }, [])
+
     return (
         <div>
             <p className={styles.title}>Password & Security</p>
+            <div className={styles.PasswordWrap}>
+                <form className={styles.form} onSubmit={onSubmitEmail}>
+                    <label className={styles.label}>Enter new email</label>
+                    <input
+                        className={styles.textarea}
+                        type="email"
+                        value={email}
+                        onChange={(event) => setEmail(event.target.value)}
+                        placeholder={currentEmail!}
+                    />
+                    <div className={styles.btnWrapper}>
+                        <button
+                            className={styles.button}
+                            disabled={email.length < 1}
+                        >
+                            Update Email
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     )
 }
