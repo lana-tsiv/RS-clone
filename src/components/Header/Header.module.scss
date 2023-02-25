@@ -33,8 +33,7 @@
     }
   }
 
-  &_modal,
-  &_community {
+  &_modal {
     width: 100%;
     max-width: 400px;
     background: #fff;
@@ -68,15 +67,8 @@
     }
   }
 
-  &_community {
-    display: flex !important;
-    align-items: center !important;
-    flex-direction: column !important;
-    justify-content: flex-start !important;
-    position: relative !important;
-
-    button {
-      position: absolute;
-    }
+  a {
+    text-decoration: none;
+    margin: 0 10px;
   }
 }

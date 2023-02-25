@@ -1,4 +1,12 @@
-import { query, collection, getDocs, addDoc } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  addDoc,
+  getDoc,
+  doc,
+  deleteDoc,
+  updateDoc,
+} from "firebase/firestore";
 import { db } from "@/firebaseClient/clientApp";
 
 import { communitiesCollection } from "@/firebaseClient/collections";
@@ -11,6 +19,25 @@ export const getAllCommunities = async () => {
   return data.docs.map((item) => {
     return { ...item.data(), id: item.id };
   });
+};
+
+export const getCommunity = (id: string) => {
+  if (!id) return null;
+  const docRef = doc(communitiesCollection, id);
+  getDoc(docRef);
+  return getDoc(docRef);
+};
+
+export const updateCommunity = (id: any, updateData: any) => {
+  if (!id) return null;
+  const docRef = doc(communitiesCollection, id);
+  updateDoc(docRef, updateData);
+};
+
+export const removeCommunity = (id: string) => {
+  if (!id) return null;
+  const docRef = doc(communitiesCollection, id);
+  deleteDoc(docRef);
 };
 
 export const createCommunity = (props: ICommunity) => {
