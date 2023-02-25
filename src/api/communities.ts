@@ -1,4 +1,12 @@
-import { collection, getDocs, addDoc, getDoc, doc } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  addDoc,
+  getDoc,
+  doc,
+  deleteDoc,
+  updateDoc,
+} from "firebase/firestore";
 import { db } from "@/firebaseClient/clientApp";
 
 import { communitiesCollection } from "@/firebaseClient/collections";
@@ -18,6 +26,18 @@ export const getCommunity = (id: string) => {
   const docRef = doc(communitiesCollection, id);
   getDoc(docRef);
   return getDoc(docRef);
+};
+
+export const updateCommunity = (id: any, updateData: any) => {
+  if (!id) return null;
+  const docRef = doc(communitiesCollection, id);
+  updateDoc(docRef, updateData);
+};
+
+export const removeCommunity = (id: string) => {
+  if (!id) return null;
+  const docRef = doc(communitiesCollection, id);
+  deleteDoc(docRef);
 };
 
 export const createCommunity = (props: ICommunity) => {
