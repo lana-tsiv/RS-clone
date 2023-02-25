@@ -36,7 +36,6 @@ const ModalLogIn = () => {
           {translate("policy")}.
         </a>
       </p>
-      <GoogleButton />
       <button className={styles.modal_content__button_apple}>
         <svg
           className={styles.modal_content__button_apple_svg}

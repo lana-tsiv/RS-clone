@@ -16,10 +16,13 @@ import {
 import { main } from "@/store/selectors";
 import Button from "../common/Button";
 import SignInForm from "../AuthForm/SignInForm";
+import CreateCommunityModal from "./Communities/CreateCommunityModal";
 import { auth } from '@/firebaseClient/clientApp';
+import {useRouter} from "next/router";
 
 const Header: React.FC = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [isCommunityModalOpen, setCommunityModa] = useState(false);
   const [isSignIn, setIsSignIn] = useState(true);
 
   const handleSignIn = () => setIsSignIn(true);
@@ -64,6 +67,7 @@ const Header: React.FC = () => {
 
   const closeModal = () => setIsOpen(false);
 
+  const router = useRouter();
   return (
     <header className={style.header}>
       <div className={style.header_logo__wrapper}>
@@ -74,12 +78,42 @@ const Header: React.FC = () => {
       <Search onSearch={searchHandler} />
       <div className={style.header_buttons__wrapper}>
         <div className={style.userDisplayName}>{userDisplayName}</div>
+        {/* {isAuth && ( */}
+        <Button
+          clickHandler={() => setCommunityModa(!isCommunityModalOpen)}
+          text="create community"
+          isSecondary
+        />
+        {/* )} */}
+          {isAuth && (<Button
+                  text={'Manage account'}
+                  clickHandler={() => router.push('/manage-account')}
+                  isSecondary={true}
+              />
+          )}
         <Button
           clickHandler={!isAuth ? openModal : handleSendSignUp}
           text={isAuth ? "log out" : "log in"}
           isSecondary
         />
       </div>
+
+      <ReactModal
+        className={style.header_community}
+        isOpen={isCommunityModalOpen}
+        onRequestClose={() => setCommunityModa(!isCommunityModalOpen)}
+        ariaHideApp={false}
+      >
+        <div className={style.header_community__wrapper}>
+          <Button
+            clickHandler={() => setCommunityModa(!isCommunityModalOpen)}
+            text="Close"
+            isSecondary
+          />
+        </div>
+        <CreateCommunityModal />
+      </ReactModal>
+
       <ReactModal
         className={style.header_modal}
         isOpen={modalIsOpen}
