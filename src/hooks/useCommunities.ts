@@ -2,8 +2,16 @@ import { useMutation, useQuery } from "@/hooks/reactQuery";
 import { useQueryClient } from "@tanstack/react-query";
 
 import { ICommunity } from "@/types/common";
-import { createCommunity, getAllCommunities } from "@/api/communities";
-import { CREATE_COMMUNITY, COMMUNITIES } from "@/constants/queryKeys";
+import {
+  createCommunity,
+  getAllCommunities,
+  getCommunity,
+} from "@/api/communities";
+import {
+  CREATE_COMMUNITY,
+  COMMUNITIES,
+  SINGLE_COMMUNITY,
+} from "@/constants/queryKeys";
 
 export const useCommunities = () => {
   const queryClient = useQueryClient();
@@ -33,7 +41,21 @@ export const useCommunities = () => {
   return {
     communitiesData,
     handleCreateCommunity,
-    isLoadingPosts: isLoadingCommunities || isFetchingCommunities,
+    isLoadingCommunities: isLoadingCommunities || isFetchingCommunities,
     isLoadingCreateCommunity,
   };
+};
+
+export const useSingleCommunity = ({ communityId }: any) => {
+  const { data: singleCommunity } = useQuery({
+    queryKey: [SINGLE_COMMUNITY, communityId],
+    queryFn: () => getCommunity(communityId),
+    refetchOnWindowFocus: false,
+    enabled: [!!communityId],
+    onSuccess: () => {
+      console.log("SINGLE COMMUNITY FETCHED");
+    },
+  });
+
+  return { singleCommunity };
 };

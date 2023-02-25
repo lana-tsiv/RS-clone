@@ -15,6 +15,8 @@ export interface IPost {
 export interface ICommunity {
   displayName: string;
   description: string;
+  users: string[];
+  posts: IPost[];
 }
 
 export interface ModalProps {

@@ -1,20 +1,23 @@
-import { createCommunity, getAllCommunities } from "@/api/communities";
 import { useEffect, useState } from "react";
+
+import { IPost } from "@/types/common";
+import { main } from "@/store/selectors";
+import { createCommunity, getAllCommunities } from "@/api/communities";
+
 import styles from "./CreateCommunityModal.module.scss";
+import { useAppSelector } from "@/store/store";
 
 const CreateCommunityModal = () => {
-  const [array, setArray] = useState<any[]>([]);
   const [state, setState] = useState({
     displayName: "",
     description: "",
+    users: [],
+    posts: [],
   });
-  useEffect(() => {
-    getAllCommunities().then((data) => {
-      setArray(data);
-    });
-  }, []);
 
-  console.log(array);
+  const { userDisplayName } = useAppSelector(main);
+
+  console.log(userDisplayName);
 
   return (
     <div className={styles.modal_content}>
@@ -24,6 +27,8 @@ const CreateCommunityModal = () => {
           setState({
             displayName: e.target.value,
             description: state.description,
+            users: [],
+            posts: [],
           })
         }
       />
@@ -33,6 +38,8 @@ const CreateCommunityModal = () => {
           setState({
             displayName: state.displayName,
             description: e.target.value,
+            users: [],
+            posts: [],
           })
         }
       />
