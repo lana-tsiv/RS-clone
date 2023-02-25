@@ -1,12 +1,103 @@
-.communitiesWrapper {
-  width: 80%;
+.communities_wrapper {
+  width: 100%;
   display: flex;
+  padding: 0 10%;
   flex-direction: column;
   align-items: center;
   text-align: center;
 }
 
 .descriptions {
-  width: 60%;
-  text-align: center;
+  width: 100%;
+  text-align: start;
+}
+
+.posts_wrapper {
+  display: flex;
+  width: 100%;
+}
+
+.posts {
+  width: 80%;
+  height: 100%;
+  display: flex;
+  margin-top: 50px;
+  flex-direction: column;
+  text-align: start;
+}
+
+.users {
+  width: 20%;
+  padding: 5px;
+  height: 100%;
+  display: flex;
+  margin-top: 50px;
+  text-align: start;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow: auto;
+  position: relative;
+
+  min-height: 50vh;
+
+  h2 {
+    font-size: 14px;
+    text-decoration: underline;
+  }
+
+  span {
+    font-size: 12px;
+  }
+
+  button {
+    right: 2%;
+    width: 45px;
+    position: absolute;
+  }
+}
+
+.community_title {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.community_modal {
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 70vh;
+  z-index: 111;
+  display: flex;
+  position: fixed;
+  overflow: hidden;
+  max-width: 400px;
+  border-radius: 4px;
+  background: #fff;
+  border-radius: 12px;
+  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
+  transform: translate(-50%, -50%);
+  box-shadow: 1px 7px 20px 2px rgb(0 0 0 / 40%);
+
+  &__wrapper {
+    width: 100%;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  h1 {
+    font-size: 18px;
+    margin-right: 50px;
+    margin: 20px 40px 0 0;
+  }
+
+  input {
+    height: 30px;
+    margin-right: 40px;
+  }
 }
