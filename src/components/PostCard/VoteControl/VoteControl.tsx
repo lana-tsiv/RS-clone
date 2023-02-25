@@ -31,18 +31,17 @@ const VoteControl = ({votesUp, postId, voters}:IVoteControl) => {
       opposite(()=>false)
     }
     else{
-      setVotes(prev=> prev - inc*2)
+      setVotes(prev=> prev - inc)
       cb(()=>false)
     }
   }
-  const upHandler = () => toggleVoteState(up, setUp, setDown, 1)
-  const downHandler = () => toggleVoteState(down, setDown, setUp, -1)
+  const upHandler = () => toggleVoteState(up, setUp, setDown, down ? 2:1)
+  const downHandler = () => toggleVoteState(down, setDown, setUp, up ? -2:-1)
 
   useEffect(() => {
    if(isVoted){
-    const voteType = up? 'up' : 'down'
-    console.log( '->',up||down? voteType: 'up')
-    toggleVote({postId, email: userEmail, vote: up||down? voteType: null})
+    const voteType = up ? 'up' : 'down'
+    toggleVote({postId, email: userEmail, vote: up || down? voteType: null, count: ~~votes})
    } 
   }, [votes])
 
@@ -53,18 +52,10 @@ const VoteControl = ({votesUp, postId, voters}:IVoteControl) => {
       if(!voters?.[userEmail]) return 
       voters?.[userEmail] !=='down'? setUp(true) : setDown(true)
     }
-    // console.log(up, down)
   }
   useEffect(() => {
     checkVotes()
   }, [votesUp] )
-
-  useEffect(() => {
-    console.log('!',up, down)
-  }, [up, down] )
-
-  
-    console.log('!',up, down)
 
   return <div className={style.voteWrapper}>
             <div className={
