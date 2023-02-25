@@ -5,3 +5,4 @@ export const VOTE_POST = "vote-post";
 export const COMMUNITIES = "communities";
 export const SINGLE_COMMUNITY = "community";
 export const CREATE_COMMUNITY = "create-community";
+export const UPDATE_COMMUNITY = "update-community";

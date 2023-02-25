@@ -18,6 +18,7 @@ import { useAppSelector } from "@/store/store";
 import { main } from "@/store/selectors";
 import { updateCommunity } from "@/api/communities";
 import { ICommunity } from "@/types/common";
+import { useSingleCommunity } from '@/hooks/useCommunities';
 
 interface IPostForm {
   field?: [];
@@ -32,15 +33,14 @@ const PostForm = (props: IPostForm) => {
   const [text, setText] = useState("");
   const [image, setImage] = useState<null | FileList>(null);
   const { userDisplayName, userEmail } = useAppSelector(main);
+  const {handleUpdateCommunity} = useSingleCommunity({communityId: id});
 
   const { handleCreatePost, isLoadingCreatePost } = usePosts();
 
-  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setTitle(e.target.value);
-  const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) =>
-    setText(e.target.value);
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) =>
-    setImage(event.target.files);
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value);
+  const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => setText(e.target.value);
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => setImage(event.target.files);
+
   const handleCreatePostClick = () => {
     if (props.isCommunityPost) {
       image
@@ -48,7 +48,6 @@ const PostForm = (props: IPostForm) => {
         : handleSendCommunityPost(null);
       reset();
 
-      setTimeout(() => window.location.reload(), 1000);
     } else {
       image ? uploadImage(image, handleSendPost) : handleSendPost(null);
       reset();
@@ -64,7 +63,7 @@ const PostForm = (props: IPostForm) => {
           }
         : {};
 
-    updateCommunity(id, {
+    const updateData = {
       displayName: props?.community?.displayName,
       description: props?.community?.description,
       users: props?.community?.users,
@@ -81,7 +80,27 @@ const PostForm = (props: IPostForm) => {
           ...cred,
         },
       ],
-    });
+    }
+
+    handleUpdateCommunity({id, updateData})
+    // updateCommunity(id, {
+    //   displayName: props?.community?.displayName,
+    //   description: props?.community?.description,
+    //   users: props?.community?.users,
+    //   posts: [
+    //     ...props?.community?.posts,
+    //     {
+    //       userId: "7ty4kpyNv35QonTVsZMA",
+    //       title,
+    //       text,
+    //       votesUp: 0,
+    //       votesDown: 0,
+    //       timestamp: Date.now(),
+    //       images: url ? [url] : [],
+    //       ...cred,
+    //     },
+    //   ],
+    // });
   };
 
   const handleSendPost = (url: string | null) => {
