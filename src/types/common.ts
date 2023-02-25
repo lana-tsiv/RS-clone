@@ -1,4 +1,5 @@
 export interface IPost {
+	voters?: Record<string, string>;
   displayName?: string;
   email?: string;
   postId?: string;
@@ -17,6 +18,7 @@ export interface ICommunity {
   description: string;
   users: string[];
   posts: any;
+  creator: string;
 }
 
 export interface ModalProps {

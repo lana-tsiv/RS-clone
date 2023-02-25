@@ -40,6 +40,7 @@ const PostCard = ({ fields, commentsCount, postId, refView, isSinglePost }: IPos
       ref={refView ? refView : null}
     >
       <VoteControl
+        voters={fields?.voters  || {}}
         votesUp={fields.votesUp}
         postId={postId}
       />

@@ -8,8 +8,6 @@ import Button from "@/components/common/Button";
 
 import style from "./communitiesView.module.scss";
 import { useAppDispatch, useAppSelector } from "@/store/store";
-import Feed from "@/components/Feed";
-import { usePosts } from "@/hooks/usePosts";
 import { OrderOptions } from "@/constants/enums";
 import { useInView } from "react-intersection-observer";
 import { setPageSize, setSort } from "@/slices/main";
@@ -39,7 +37,7 @@ const options = [
 const CommunityPage = () => {
   const router = useRouter();
   const { id } = router.query;
-  const { singleCommunity } = useSingleCommunity({ communityId: id as string });
+  const { singleCommunity, handleUpdateCommunity } = useSingleCommunity({ communityId: id as string });
 
   const dispatch = useAppDispatch();
   const { ref, inView } = useInView();
@@ -47,9 +45,6 @@ const CommunityPage = () => {
   const {
     pageSize,
     userDisplayName,
-    sortFieldName,
-    sortDirection,
-    searchValue,
   } = useAppSelector(main);
 
   const pageHandler = (pageSize: number) => dispatch(setPageSize({ pageSize }));
@@ -62,6 +57,9 @@ const CommunityPage = () => {
     sortHandler({ sortFieldName, sortDirection });
   };
 
+  const parseCommunity = (community: any) => community ? community?.data() : null;
+
+
   React.useEffect(() => {
     if (inView) pageHandler(pageSize + 5);
   }, [inView]);
@@ -70,26 +68,52 @@ const CommunityPage = () => {
     console.log(pageSize);
   }, [pageSize]);
 
-  const parseCommunity = (community: any) =>
-    community ? community?.data() : null;
+  const community =  parseCommunity(singleCommunity)
+  const isJoined= community?.users?.includes(userDisplayName)
 
-  const community = parseCommunity(singleCommunity);
+  const handleCommunityUpdate = () => {
+    const updatedList = isJoined ? community.users.filter((item: any) => item !== userDisplayName): [...community.users, userDisplayName];
+    const updateData = {
+      displayName: community.displayName,
+      description: community?.description,
+      users: updatedList,
+      posts: community?.posts,
+    }
+    handleUpdateCommunity( {id, updateData})
+  }
 
-  console.log(community);
   return (
     <div className={style.communities_wrapper}>
       <div className={style.community_title}>
         <div>{community?.displayName}</div>
-        <Button
-          clickHandler={() => {
-            removeCommunity(id as string);
-            router.push("/communities");
-          }}
-          text={"Remove community"}
-          isSecondary
-        />
+        <div className={style.btnWrapper}>
+            {!!userDisplayName && (
+              <Button
+                clickHandler={handleCommunityUpdate}
+                text={isJoined ? 'Leave' : 'Join' }
+                isSecondary
+              />
+            )}
+          {!!userDisplayName && community?.creator === userDisplayName &&
+            <Button
+              clickHandler={() => {
+                removeCommunity(id as string);
+                router.push("/communities");
+              }}
+              text={"Remove community"}
+              isSecondary
+            />}
+        </div>
       </div>
+      <div className={style.communityDesc}>
       <span className={style.descriptions}>{community?.description}</span>
+        <div className={style.users}>
+          <h2>Community Members:</h2>
+          {community?.users?.map((name: string, index: number) => (
+            <span key={index}>{name}</span>
+          ))}
+        </div>
+      </div>
       <div className={style.posts_wrapper}>
         <div className={style.posts}>
           <h2>Posts</h2>
@@ -125,32 +149,6 @@ const CommunityPage = () => {
               {inView && <span className={style.feedEnd}>End of Feed</span>}
             </div>
           ) : null}
-        </div>
-        <div className={style.users}>
-          {!!userDisplayName &&
-            community?.users?.every(
-              (item: any) => item !== userDisplayName
-            ) && (
-              <button
-                onClick={() => {
-                  updateCommunity(id, {
-                    displayName: community.displayName,
-                    description: community?.description,
-                    users: [...community.users, userDisplayName],
-                    posts: community?.posts,
-                  });
-
-                  alert(`${userDisplayName} have joined the community`);
-                  setTimeout(() => window.location.reload(), 1000);
-                }}
-              >
-                Join
-              </button>
-            )}
-          <h2>Community Members:</h2>
-          {community?.users?.map((name: string, index: number) => (
-            <span key={index}>{name}</span>
-          ))}
         </div>
       </div>
     </div>

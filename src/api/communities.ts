@@ -28,7 +28,8 @@ export const getCommunity = (id: string) => {
   return getDoc(docRef);
 };
 
-export const updateCommunity = (id: any, updateData: any) => {
+export const updateCommunity = ({id, updateData}: any) => {
+  console.log(id, updateData)
   if (!id) return null;
   const docRef = doc(communitiesCollection, id);
   updateDoc(docRef, updateData);

@@ -6,8 +6,11 @@ import { createCommunity, getAllCommunities } from "@/api/communities";
 
 import styles from "./CreateCommunityModal.module.scss";
 import { useAppSelector } from "@/store/store";
+import Button from '@/components/common/Button';
+import { useCommunities } from '@/hooks/useCommunities';
 
 const CreateCommunityModal = ({ setCommunityModa }: any) => {
+  const { handleCreateCommunity } = useCommunities()
   const { userDisplayName } = useAppSelector(main);
   const [communitiesList, setCommunitiesList] = useState<any[]>([]);
   const [state, setState] = useState({
@@ -15,6 +18,7 @@ const CreateCommunityModal = ({ setCommunityModa }: any) => {
     description: "",
     users: [`${userDisplayName}`],
     posts: [],
+    creator: `${userDisplayName}`,
   });
 
   const isSimilar = (string1 = "", string2 = "", similarityIndex = 0.75) => {
@@ -41,6 +45,7 @@ const CreateCommunityModal = ({ setCommunityModa }: any) => {
             description: state.description,
             users: state.users,
             posts: state.posts,
+            creator: `${userDisplayName}`,
           })
         }
       />
@@ -52,12 +57,13 @@ const CreateCommunityModal = ({ setCommunityModa }: any) => {
             description: e.target.value,
             users: state.users,
             posts: state.posts,
+            creator: `${userDisplayName}`,
           })
         }
       />
 
-      <button
-        onClick={() => {
+      <Button
+        clickHandler={() => {
           if (
             communitiesList.some(({ displayName }) =>
               isSimilar(displayName?.trim(), state.displayName?.trim())
@@ -74,15 +80,13 @@ const CreateCommunityModal = ({ setCommunityModa }: any) => {
           } else if (state.description.length > 400) {
             alert("Description cannot be longer than 400 characters!");
           } else {
-            createCommunity(state);
+            handleCreateCommunity(state);
+            // createCommunity(state);
             setCommunityModa(false);
-            alert("Community created!");
-            setTimeout(() => window.location.reload(), 1000);
           }
         }}
-      >
-        Create
-      </button>
+        text="Create"
+      />
     </div>
   );
 };
