@@ -1,0 +1,13 @@
+.tagsContainer {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+
+	.tag {
+		padding: 0.5rem;
+		border-radius: 5px;
+		background-color: rgba(241, 59, 26, 0.1);
+		color: #f13b1a;
+		font-size: 0.8rem;
+	}
+}

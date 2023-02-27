@@ -1,0 +1,33 @@
+.sidebarItemActive, .sidebarItemDeActive {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.01);
+    transition: all 0.1s ease-in-out;
+  }
+}
+
+.icon {
+  width: 16px;
+  object-fit: cover;
+}
+
+.sidebarItemActive {
+  color: #1d1d1d;
+
+  .icon {
+    opacity: 1;
+  }
+}
+
+.sidebarItemDeActive {
+  color: #787c7e;
+
+  .icon {
+    opacity: 0.2;
+  }
+}

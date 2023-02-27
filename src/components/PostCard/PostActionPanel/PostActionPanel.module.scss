@@ -1,0 +1,27 @@
+.postActionPanelContainer {
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	cursor: pointer;
+}
+
+.actionPanelContainer {
+	display: flex;
+	gap: 1rem;
+	color: #66bdf4;
+}
+
+.wrap {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	width: 100%;
+}
+
+.open {
+	display: block;
+}
+
+.close {
+	display: none;
+}
