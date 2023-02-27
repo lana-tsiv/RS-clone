@@ -1,0 +1,74 @@
+.header {
+  width: 100%;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #ffffff;
+  max-width: 1170px;
+  margin: 0 auto;
+  margin-bottom: 30px;
+
+  &_buttons,
+  &_logo {
+    &__wrapper {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+    }
+  }
+
+  &_buttons {
+    &__button {
+      margin: 0 5px;
+      background-color: #0079d3;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: bold;
+    }
+  }
+
+  &_modal {
+    width: 100%;
+    max-width: 400px;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 1px 7px 20px 2px rgb(0 0 0 / 40%);
+    left: 50%;
+    overflow: hidden;
+    position: fixed;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 111;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &__wrapper {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      position: relative;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
+    &__close {
+      position: absolute;
+      right: 16px;
+      top: 16px;
+    }
+  }
+
+  a {
+    text-decoration: none;
+    margin: 0 10px;
+  }
+}

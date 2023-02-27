@@ -1,0 +1,19 @@
+.title {
+  font-size: 1rem;
+  font-weight: normal;
+  color: #6d6d6e;
+  padding: 12px 0;
+}
+
+.commentsContainer {
+  padding: 6px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.btnWrap {
+  display: flex;
+  flex-direction: row;
+  padding: 0 48px;
+}
